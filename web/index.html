@@ -1504,8 +1504,24 @@
         title: "Folder: `ANTIGRAVITY | Video Editor` (1wF355bFfBSyiS_N1tMkONQWWozuNjIQ0)",
         isSettingsGrid: false,
         assets: [
-          { name: "Source Videos [Clipstudio]", type: "Root Source Videos Folder (1PLLjdQtqU9JxdVWsbXJZ5N5z6lSpNqwW)", size: "Folder", format: "DRIVE FOLDER", segmentIdx: 0, poster: "thumbnails/master_adhd_timers.jpg", scrubGif: "thumbnails/master_adhd_timers_scrub.gif", proxyTag: "Root Media Folder", url: "https://drive.google.com/drive/folders/1PLLjdQtqU9JxdVWsbXJZ5N5z6lSpNqwW" },
-          { name: "Clipstudio", type: "Settings, Profiles & Change Notes Folder (17N2FTWKILTfObOIkrJTfAslILQyzFs9e)", size: "Folder", format: "DRIVE FOLDER", segmentIdx: 0, poster: "thumbnails/master_adhd_timers.jpg", scrubGif: "thumbnails/master_adhd_timers_scrub.gif", proxyTag: "Settings Root", url: "https://drive.google.com/drive/folders/17N2FTWKILTfObOIkrJTfAslILQyzFs9e" }
+          {
+            name: "Source Videos [Clipstudio]",
+            isFolder: true,
+            format: "DRIVE FOLDER",
+            size: "Drive Directory",
+            type: "Root Source Videos Folder containing Full Videos & dedicated Clips/ subdirectories (1PLLjdQtqU9JxdVWsbXJZ5N5z6lSpNqwW)",
+            studioNavKey: "source_videos",
+            url: "https://drive.google.com/drive/folders/1PLLjdQtqU9JxdVWsbXJZ5N5z6lSpNqwW"
+          },
+          {
+            name: "Clipstudio",
+            isFolder: true,
+            format: "DRIVE FOLDER",
+            size: "Drive Directory",
+            type: "Settings, Master Profiles, Lineage Catalogs & Takeout Archives Folder (17N2FTWKILTfObOIkrJTfAslILQyzFs9e)",
+            studioNavKey: "clipstudio",
+            url: "https://drive.google.com/drive/folders/17N2FTWKILTfObOIkrJTfAslILQyzFs9e"
+          }
         ]
       }
     };
@@ -2209,6 +2225,18 @@
 
     function switchDriveFolder(key) {
       activeDriveFolderKey = key;
+      const btns = {
+        source_videos: document.getElementById("btnFolderSourceVideos"),
+        clipstudio: document.getElementById("btnFolderClipstudio"),
+        video_editor: document.getElementById("btnFolderEditor")
+      };
+      Object.keys(btns).forEach(k => {
+        if (btns[k]) {
+          btns[k].className = k === key
+            ? "px-3 py-1.5 bg-emerald-600 text-white rounded-lg text-xs font-semibold shadow"
+            : "px-3 py-1.5 bg-gray-800 text-gray-300 rounded-lg text-xs font-semibold border border-[#2d3b54]";
+        }
+      });
       renderDriveView();
     }
 
@@ -2231,7 +2259,7 @@
             iconSvg = `<svg class="w-5 h-5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>`;
           } else if (item.fileType === "folder") {
             badgeColorClass = "bg-purple-500/20 text-purple-300 border-purple-500/40";
-            iconSvg = `<svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg>`;
+            iconSvg = `<svg class="w-5 h-5 text-purple-400" fill="currentColor" viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg>`;
           }
           return `
             <div class="p-4 rounded-xl bg-[#0d131f] border border-[#222d40] hover:border-[#38bdf8]/40 transition-all flex flex-col justify-between gap-3 text-xs shadow-md">
@@ -2258,38 +2286,82 @@
           `;
         }).join('');
       } else {
-        // Video / Media library grid format with Image Posters and dynamic Hover-Scrubbing GIFs
+        // Media library / Folder grid format
         container.className = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5";
-        container.innerHTML = f.assets.map(item => `
-          <div class="p-3.5 rounded-xl bg-[#090d14] border border-[#222d40] hover:border-sky-500/40 transition-all flex flex-col justify-between gap-3 text-xs">
-            <div class="space-y-2">
-              <div class="relative w-full aspect-video rounded-lg overflow-hidden bg-black border border-[#222d40] group">
-                <img src="${item.poster || 'thumbnails/master_adhd_timers.jpg'}" 
-                     data-poster="${item.poster || 'thumbnails/master_adhd_timers.jpg'}"
-                     data-scrub="${item.scrubGif || item.poster || 'thumbnails/master_adhd_timers_scrub.gif'}"
-                     onmouseenter="this.src = this.getAttribute('data-scrub')"
-                     onmouseleave="this.src = this.getAttribute('data-poster')"
-                     class="w-full h-full object-cover transition-opacity duration-200 cursor-pointer" 
-                     alt="${item.name}">
-                <div class="absolute bottom-1.5 left-1.5 px-1.5 py-0.5 rounded bg-black/80 text-[10px] font-mono text-emerald-300 border border-emerald-500/30">
-                  ${item.format || 'MP4 Clip'}
+        container.innerHTML = f.assets.map(item => {
+          const isFolder = item.isFolder || item.format === 'DRIVE FOLDER' || (item.type && item.type.toLowerCase().includes('folder')) || item.size === 'Drive Directory' || item.size === 'Folder';
+          
+          if (isFolder) {
+            // Clean Google Drive Folder Card (No video GIFs, no scrubbers, no playback buttons)
+            return `
+              <div class="p-4 rounded-xl bg-[#0d131f] border border-[#222d40] hover:border-emerald-500/40 transition-all flex flex-col justify-between gap-3 text-xs shadow-md">
+                <div class="space-y-3">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                      <span class="p-2.5 rounded-xl bg-purple-500/15 text-purple-400 border border-purple-500/30">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg>
+                      </span>
+                      <div>
+                        <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-purple-500/20 text-purple-300 border border-purple-500/40">📁 DRIVE FOLDER</span>
+                      </div>
+                    </div>
+                    <span class="text-[10px] font-mono text-gray-400">Google Drive Directory</span>
+                  </div>
+                  <div>
+                    <div class="font-bold text-white text-sm font-mono truncate" title="${item.name}">${item.name}</div>
+                    <div class="text-[11px] text-gray-400 mt-1 leading-relaxed">${item.type}</div>
+                  </div>
                 </div>
-                <div class="absolute top-1.5 right-1.5 px-1.5 py-0.5 rounded bg-black/80 text-[9px] font-mono text-sky-300 border border-sky-500/30">
-                  Hover to Scrub ⚡
+                <div class="flex items-center justify-between pt-2.5 border-t border-[#1c2638] gap-2">
+                  ${item.studioNavKey ? `
+                    <button onclick="switchDriveFolder('${item.studioNavKey}')" class="px-2.5 py-1 bg-sky-600/25 hover:bg-sky-600/40 text-sky-300 border border-sky-500/40 rounded text-[11px] font-semibold flex items-center gap-1">
+                      <span>Browse in Studio</span>
+                      <span>&rarr;</span>
+                    </button>
+                  ` : `
+                    <span class="text-[10px] font-mono text-gray-500">Google Drive Linked</span>
+                  `}
+                  <a href="${item.url}" target="_blank" class="px-3 py-1 bg-emerald-600/25 hover:bg-emerald-600/40 text-emerald-300 border border-emerald-500/40 rounded text-[11px] font-bold flex items-center gap-1 font-mono shrink-0">
+                    <span>Open Folder in Drive</span>
+                    <span>&nearr;</span>
+                  </a>
                 </div>
               </div>
-              <div>
-                <span class="px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300 font-mono text-[10px]">${item.size} &bull; ${item.proxyTag || 'Proxy Ready'}</span>
-                <div class="font-bold text-white text-sm mt-1 truncate" title="${item.name}">${item.name}</div>
-                <div class="text-[11px] text-gray-400 truncate">${item.type}</div>
+            `;
+          }
+
+          // Real playable Video Clip Card with thumbnail poster and scrub GIF
+          return `
+            <div class="p-3.5 rounded-xl bg-[#090d14] border border-[#222d40] hover:border-sky-500/40 transition-all flex flex-col justify-between gap-3 text-xs">
+              <div class="space-y-2">
+                <div class="relative w-full aspect-video rounded-lg overflow-hidden bg-black border border-[#222d40] group">
+                  <img src="${item.poster || 'thumbnails/master_adhd_timers.jpg'}" 
+                       data-poster="${item.poster || 'thumbnails/master_adhd_timers.jpg'}"
+                       data-scrub="${item.scrubGif || item.poster || 'thumbnails/master_adhd_timers_scrub.gif'}"
+                       onmouseenter="this.src = this.getAttribute('data-scrub')"
+                       onmouseleave="this.src = this.getAttribute('data-poster')"
+                       class="w-full h-full object-cover transition-opacity duration-200 cursor-pointer" 
+                       alt="${item.name}">
+                  <div class="absolute bottom-1.5 left-1.5 px-1.5 py-0.5 rounded bg-black/80 text-[10px] font-mono text-emerald-300 border border-emerald-500/30">
+                    ${item.format || 'MP4 Clip'}
+                  </div>
+                  <div class="absolute top-1.5 right-1.5 px-1.5 py-0.5 rounded bg-black/80 text-[9px] font-mono text-sky-300 border border-sky-500/30">
+                    Hover to Scrub ⚡
+                  </div>
+                </div>
+                <div>
+                  <span class="px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300 font-mono text-[10px]">${item.size} &bull; ${item.proxyTag || 'Proxy Ready'}</span>
+                  <div class="font-bold text-white text-sm mt-1 truncate" title="${item.name}">${item.name}</div>
+                  <div class="text-[11px] text-gray-400 truncate">${item.type}</div>
+                </div>
+              </div>
+              <div class="flex justify-between pt-2 border-t border-[#1c2638]">
+                <button onclick="openMainView('workspace'); previewAnchor(${item.segmentIdx || 0}, true);" class="px-2.5 py-1 bg-sky-600/20 hover:bg-sky-600/30 text-sky-300 rounded font-semibold">&#9654; Play Preview</button>
+                <a href="${item.url}" target="_blank" class="px-2.5 py-1 bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/30 rounded font-mono">View in Drive &nearr;</a>
               </div>
             </div>
-            <div class="flex justify-between pt-2 border-t border-[#1c2638]">
-              <button onclick="openMainView('workspace'); previewAnchor(${item.segmentIdx || 0}, true);" class="px-2.5 py-1 bg-sky-600/20 hover:bg-sky-600/30 text-sky-300 rounded font-semibold">&#9654; Play Preview</button>
-              <a href="${item.url}" target="_blank" class="px-2.5 py-1 bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/30 rounded font-mono">View in Drive &nearr;</a>
-            </div>
-          </div>
-        `).join('');
+          `;
+        }).join('');
       }
     }
 
