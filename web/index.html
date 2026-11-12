@@ -49,7 +49,88 @@
   </style>
 </head>
 <body class="min-h-screen p-4 md:p-5 antialiased pb-32">
-  <div class="max-w-7xl mx-auto space-y-4">
+
+  <!-- ======================================================================= -->
+  <!-- ADMIN AUTHENTICATION GATEWAY (LOGIN SCREEN)                             -->
+  <!-- ======================================================================= -->
+  <div id="loginScreenContainer" class="min-h-[85vh] flex items-center justify-center p-4">
+    <div class="bg-[#111722] border-2 border-[#222d40] hover:border-emerald-500/40 transition-all rounded-3xl max-w-md w-full p-6 md:p-8 space-y-6 shadow-2xl relative overflow-hidden">
+      <!-- Glow ambient background -->
+      <div class="absolute -top-24 -right-24 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-24 -left-24 w-48 h-48 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <!-- Brand Header -->
+      <div class="text-center space-y-2">
+        <div class="inline-flex items-center justify-center p-3.5 rounded-2xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 mb-1 shadow-lg shadow-emerald-500/10">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+        </div>
+        <h1 class="text-xl md:text-2xl font-black tracking-tight text-white">Antigravity ClipStudio</h1>
+        <p class="text-xs text-gray-400">Admin Authentication Required</p>
+      </div>
+
+      <!-- Error / Alert Banner -->
+      <div id="loginAlertBox" class="hidden p-3 rounded-xl bg-rose-500/15 border border-rose-500/40 text-rose-300 text-xs font-semibold flex items-center gap-2">
+        <svg class="w-4 h-4 shrink-0 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <span id="loginAlertMsg">Invalid credentials.</span>
+      </div>
+
+      <!-- Form -->
+      <form onsubmit="handleUserLoginSubmit(event)" class="space-y-4">
+        <div class="space-y-1.5">
+          <label class="block text-xs font-bold text-gray-300 uppercase tracking-wider">Admin Username</label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+            </span>
+            <input id="loginInputUsername" type="text" required value="ADMIN" class="w-full bg-[#090d14] border border-[#2d3b54] rounded-xl pl-9 pr-3.5 py-2.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400 transition-all font-medium" placeholder="ADMIN" />
+          </div>
+        </div>
+
+        <div class="space-y-1.5">
+          <div class="flex items-center justify-between">
+            <label class="block text-xs font-bold text-gray-300 uppercase tracking-wider">Password</label>
+            <span class="text-[10px] text-gray-500 font-mono">Default: defaultpassword</span>
+          </div>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+            </span>
+            <input id="loginInputPassword" type="password" required class="w-full bg-[#090d14] border border-[#2d3b54] rounded-xl pl-9 pr-10 py-2.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400 transition-all font-mono" placeholder="Enter password" />
+            <button type="button" onclick="togglePasswordVisibility('loginInputPassword')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 hover:text-gray-300">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between text-xs pt-1">
+          <label class="flex items-center gap-2 cursor-pointer text-gray-400 hover:text-gray-300">
+            <input id="loginRememberMe" type="checkbox" checked class="rounded bg-gray-800 border-gray-600 text-emerald-500 focus:ring-0" />
+            <span>Keep me logged in</span>
+          </label>
+        </div>
+
+        <button type="submit" id="btnLoginSubmit" class="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs shadow-lg shadow-emerald-600/20 flex items-center justify-center gap-2 transition-all transform active:scale-[0.99]">
+          <span>Sign In to ClipStudio</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+        </button>
+      </form>
+
+      <!-- First time notice footer -->
+      <div class="pt-4 border-t border-[#222d40] text-center space-y-1">
+        <p class="text-[11px] text-gray-400">
+          First time logging in? Use Username <code class="text-emerald-300 font-mono bg-emerald-500/10 px-1 py-0.5 rounded">ADMIN</code> and Password <code class="text-emerald-300 font-mono bg-emerald-500/10 px-1 py-0.5 rounded">defaultpassword</code>.
+        </p>
+        <p class="text-[10px] text-gray-500">
+          You will be prompted to customize your credentials immediately upon first access.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================= -->
+  <!-- MAIN APP CONTAINER (Protected Behind Admin Auth Gate)                   -->
+  <!-- ======================================================================= -->
+  <div id="mainAppContent" class="hidden max-w-7xl mx-auto space-y-4">
 
     <!-- Top Header + Launch New Project Button + PiP / Profile Controls -->
     <header class="flex flex-col xl:flex-row xl:items-center justify-between gap-4 pb-3.5 border-b border-[#222d40]">
@@ -86,6 +167,20 @@
 
         <select id="masterProfileSelect" onchange="switchMasterProfile(this.value)" class="bg-[#090d14] border border-[#2d3b54] text-sky-300 text-xs font-semibold rounded-lg px-2.5 py-1">
         </select>
+
+        <!-- User Profile & Auth Controls -->
+        <div class="flex items-center gap-1.5 pl-2 border-l border-[#222d40]">
+          <span class="text-xs text-gray-300 font-medium flex items-center gap-1">
+            <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+            <span id="headerUserLabel" class="font-bold text-white">ADMIN</span>
+          </span>
+          <button onclick="openChangePasswordModal()" class="px-2 py-1 rounded-lg bg-gray-800 hover:bg-gray-700 text-sky-300 border border-[#2d3b54] text-[11px] font-semibold" title="Change Admin Credentials">
+            Change Password
+          </button>
+          <button onclick="performUserLogout()" class="px-2 py-1 rounded-lg bg-rose-500/15 hover:bg-rose-500/25 text-rose-300 border border-rose-500/30 text-[11px] font-semibold" title="Log Out">
+            Logout
+          </button>
+        </div>
       </div>
     </header>
 
@@ -2411,6 +2506,195 @@
       if (modal) modal.classList.add("hidden");
     }
 
+    // =========================================================================
+    // ADMIN AUTHENTICATION & CREDENTIAL MANAGEMENT (INITIAL SETUP & CUSTOMIZATION)
+    // =========================================================================
+    const DEFAULT_AUTH_CREDS = {
+      username: "ADMIN",
+      password: "defaultpassword",
+      has_changed_default: false
+    };
+
+    function getAdminCredentials() {
+      const stored = localStorage.getItem("clipstudio_admin_auth");
+      if (!stored) return { ...DEFAULT_AUTH_CREDS };
+      try {
+        return JSON.parse(stored);
+      } catch (e) {
+        return { ...DEFAULT_AUTH_CREDS };
+      }
+    }
+
+    function saveAdminCredentials(creds) {
+      localStorage.setItem("clipstudio_admin_auth", JSON.stringify(creds));
+    }
+
+    function isUserAuthenticated() {
+      return sessionStorage.getItem("clipstudio_session_auth") === "true" ||
+             localStorage.getItem("clipstudio_persistent_auth") === "true";
+    }
+
+    function checkAuthOnLoad() {
+      const creds = getAdminCredentials();
+      const userLabel = document.getElementById("headerUserLabel");
+      if (userLabel) userLabel.innerText = creds.username;
+
+      const pipEl = document.getElementById("pipFollowerWindow");
+
+      if (isUserAuthenticated()) {
+        document.getElementById("loginScreenContainer").classList.add("hidden");
+        document.getElementById("mainAppContent").classList.remove("hidden");
+        if (pipEl && pipPinned) pipEl.classList.remove("hidden");
+        // If still using the default factory password, automatically open the change password modal
+        if (!creds.has_changed_default) {
+          setTimeout(() => {
+            openChangePasswordModal(true);
+          }, 600);
+        }
+      } else {
+        document.getElementById("loginScreenContainer").classList.remove("hidden");
+        document.getElementById("mainAppContent").classList.add("hidden");
+        if (pipEl) pipEl.classList.add("hidden");
+      }
+    }
+
+    function handleUserLoginSubmit(e) {
+      e.preventDefault();
+      const usernameInput = document.getElementById("loginInputUsername").value.trim();
+      const passwordInput = document.getElementById("loginInputPassword").value;
+      const remember = document.getElementById("loginRememberMe").checked;
+      const alertBox = document.getElementById("loginAlertBox");
+      const alertMsg = document.getElementById("loginAlertMsg");
+
+      const creds = getAdminCredentials();
+
+      if (usernameInput.toUpperCase() === creds.username.toUpperCase() && passwordInput === creds.password) {
+        // Successful login
+        sessionStorage.setItem("clipstudio_session_auth", "true");
+        if (remember) {
+          localStorage.setItem("clipstudio_persistent_auth", "true");
+        } else {
+          localStorage.removeItem("clipstudio_persistent_auth");
+        }
+
+        if (alertBox) alertBox.classList.add("hidden");
+
+        // Reveal main app
+        document.getElementById("loginScreenContainer").classList.add("hidden");
+        document.getElementById("mainAppContent").classList.remove("hidden");
+
+        const pipEl = document.getElementById("pipFollowerWindow");
+        if (pipEl && pipPinned) pipEl.classList.remove("hidden");
+
+        const userLabel = document.getElementById("headerUserLabel");
+        if (userLabel) userLabel.innerText = creds.username;
+
+        logTelemetry(`Admin '${creds.username}' successfully authenticated ✓`, "text-emerald-400");
+
+        // Prompt to change password if first time or still on default
+        if (!creds.has_changed_default) {
+          setTimeout(() => {
+            openChangePasswordModal(true);
+          }, 450);
+        }
+      } else {
+        // Failed login
+        if (alertBox && alertMsg) {
+          alertMsg.innerText = "Invalid credentials. Default: Username ADMIN | Password defaultpassword";
+          alertBox.classList.remove("hidden");
+        }
+      }
+    }
+
+    function togglePasswordVisibility(fieldId) {
+      const field = document.getElementById(fieldId);
+      if (field) {
+        field.type = field.type === "password" ? "text" : "password";
+      }
+    }
+
+    function openChangePasswordModal(isFirstLoginPrompt = false) {
+      const modal = document.getElementById("changePasswordModal");
+      const creds = getAdminCredentials();
+      document.getElementById("inputNewUsername").value = creds.username;
+      document.getElementById("inputCurrentPassword").value = "";
+      document.getElementById("inputNewPassword").value = "";
+      document.getElementById("inputConfirmPassword").value = "";
+
+      const banner = document.getElementById("firstLoginWarningBanner");
+      const alertBox = document.getElementById("changeCredsAlertBox");
+      if (alertBox) alertBox.classList.add("hidden");
+
+      if (!creds.has_changed_default || isFirstLoginPrompt) {
+        banner.classList.remove("hidden");
+      } else {
+        banner.classList.add("hidden");
+      }
+
+      modal.classList.remove("hidden");
+    }
+
+    function closeChangePasswordModal() {
+      const modal = document.getElementById("changePasswordModal");
+      modal.classList.add("hidden");
+    }
+
+    function handleUpdateCredentialsSubmit(e) {
+      e.preventDefault();
+      const currentPwd = document.getElementById("inputCurrentPassword").value;
+      const newUsername = document.getElementById("inputNewUsername").value.trim() || "ADMIN";
+      const newPwd = document.getElementById("inputNewPassword").value;
+      const confirmPwd = document.getElementById("inputConfirmPassword").value;
+      const alertBox = document.getElementById("changeCredsAlertBox");
+      const alertMsg = document.getElementById("changeCredsAlertMsg");
+
+      const creds = getAdminCredentials();
+
+      if (currentPwd !== creds.password) {
+        alertMsg.innerText = "Current password does not match!";
+        alertBox.classList.remove("hidden");
+        return;
+      }
+
+      if (newPwd.length < 6) {
+        alertMsg.innerText = "New password must be at least 6 characters long.";
+        alertBox.classList.remove("hidden");
+        return;
+      }
+
+      if (newPwd !== confirmPwd) {
+        alertMsg.innerText = "New passwords do not match!";
+        alertBox.classList.remove("hidden");
+        return;
+      }
+
+      // Save new credentials
+      creds.username = newUsername;
+      creds.password = newPwd;
+      creds.has_changed_default = true;
+      saveAdminCredentials(creds);
+
+      const userLabel = document.getElementById("headerUserLabel");
+      if (userLabel) userLabel.innerText = newUsername;
+
+      closeChangePasswordModal();
+      logTelemetry(`[Security] Admin credentials updated successfully! Username: ${newUsername} ✓`, "text-emerald-400");
+      alert(`Success! Admin credentials updated.\nUsername: ${newUsername}\nNew password is now active.`);
+    }
+
+    function performUserLogout() {
+      sessionStorage.removeItem("clipstudio_session_auth");
+      localStorage.removeItem("clipstudio_persistent_auth");
+      document.getElementById("mainAppContent").classList.add("hidden");
+      document.getElementById("loginScreenContainer").classList.remove("hidden");
+      const pipEl = document.getElementById("pipFollowerWindow");
+      if (pipEl) pipEl.classList.add("hidden");
+      document.getElementById("loginInputPassword").value = "";
+      const alertBox = document.getElementById("loginAlertBox");
+      if (alertBox) alertBox.classList.add("hidden");
+      logTelemetry("Logged out from ClipStudio.", "text-gray-400");
+    }
+
     // Initialize everything
     renderProfileDropdown();
     renderWizardSources();
@@ -2422,7 +2706,71 @@
     renderCatalogView();
     startAnimatedCanvasFallback();
     previewAnchor(0, false);
+    checkAuthOnLoad();
   </script>
+
+  <!-- ======================================================================= -->
+  <!-- CHANGE ADMIN CREDENTIALS MODAL                                          -->
+  <!-- ======================================================================= -->
+  <div id="changePasswordModal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-[#111722] border-2 border-emerald-500/50 rounded-2xl max-w-md w-full p-6 md:p-7 space-y-5 shadow-2xl relative">
+      <div class="flex items-center justify-between border-b border-[#222d40] pb-3.5">
+        <div class="flex items-center gap-2.5">
+          <span class="p-2 rounded-xl bg-emerald-500/20 text-emerald-400 font-bold">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path></svg>
+          </span>
+          <div>
+            <h3 class="text-base font-bold text-white">Update Admin Credentials</h3>
+            <p id="changeCredsSubtitle" class="text-xs text-gray-400">Customize your admin username and password</p>
+          </div>
+        </div>
+        <button id="btnCancelChangeCreds" onclick="closeChangePasswordModal()" class="text-gray-400 hover:text-white text-lg font-bold">✕</button>
+      </div>
+
+      <!-- Warning if on default password -->
+      <div id="firstLoginWarningBanner" class="p-3 rounded-xl bg-amber-500/15 border border-amber-500/40 text-amber-200 text-xs leading-relaxed space-y-1">
+        <div class="font-bold flex items-center gap-1.5 text-amber-300">
+          <span>⚠️ Initial Setup Notice</span>
+        </div>
+        <p>You are logged in using the default password (<code class="font-mono bg-black/40 px-1 py-0.5 rounded text-amber-100">defaultpassword</code>). Please choose a new username and secure password below.</p>
+      </div>
+
+      <div id="changeCredsAlertBox" class="hidden p-3 rounded-xl bg-rose-500/15 border border-rose-500/40 text-rose-300 text-xs font-semibold">
+        <span id="changeCredsAlertMsg">Error updating credentials.</span>
+      </div>
+
+      <form onsubmit="handleUpdateCredentialsSubmit(event)" class="space-y-3.5 text-xs">
+        <div class="space-y-1">
+          <label class="block font-bold text-gray-300 uppercase tracking-wider text-[11px]">Current Password</label>
+          <input id="inputCurrentPassword" type="password" required class="w-full bg-[#090d14] border border-[#2d3b54] rounded-xl px-3.5 py-2 text-white font-mono placeholder-gray-500 focus:outline-none focus:border-emerald-400" placeholder="Enter current password" />
+        </div>
+
+        <div class="space-y-1">
+          <label class="block font-bold text-gray-300 uppercase tracking-wider text-[11px]">New Admin Username</label>
+          <input id="inputNewUsername" type="text" required class="w-full bg-[#090d14] border border-[#2d3b54] rounded-xl px-3.5 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-emerald-400 font-semibold" placeholder="ADMIN" />
+        </div>
+
+        <div class="space-y-1">
+          <label class="block font-bold text-gray-300 uppercase tracking-wider text-[11px]">New Password</label>
+          <input id="inputNewPassword" type="password" required minlength="6" class="w-full bg-[#090d14] border border-[#2d3b54] rounded-xl px-3.5 py-2 text-white font-mono placeholder-gray-500 focus:outline-none focus:border-emerald-400" placeholder="Min 6 characters" />
+        </div>
+
+        <div class="space-y-1">
+          <label class="block font-bold text-gray-300 uppercase tracking-wider text-[11px]">Confirm New Password</label>
+          <input id="inputConfirmPassword" type="password" required minlength="6" class="w-full bg-[#090d14] border border-[#2d3b54] rounded-xl px-3.5 py-2 text-white font-mono placeholder-gray-500 focus:outline-none focus:border-emerald-400" placeholder="Re-type new password" />
+        </div>
+
+        <div class="flex items-center justify-end gap-2.5 pt-3 border-t border-[#222d40]">
+          <button type="button" id="btnSkipChangeCreds" onclick="closeChangePasswordModal()" class="px-3.5 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-xl text-xs font-semibold">
+            Cancel
+          </button>
+          <button type="submit" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold shadow-lg shadow-emerald-600/20 flex items-center gap-1.5">
+            <span>Save &amp; Apply Credentials</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <!-- GEMINI DRIVE SCANNER MODAL -->
   <div id="geminiScanModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
