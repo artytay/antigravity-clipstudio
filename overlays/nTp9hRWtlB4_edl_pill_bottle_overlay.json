@@ -1,0 +1,11 @@
+{
+  "clip_id": "edl_pill_bottle",
+  "title": "Timer Capsule Pill Bottle",
+  "subtitle": "Rating: 4.7/5 \u2022 $16.95",
+  "cta_badge": "Link in Description: https://amzn.to/adhd-timer-cap",
+  "appear_at_offset_sec": 1.0,
+  "hold_duration_sec": 5.5,
+  "easing": "cubic-bezier(0.22, 1, 0.36, 1)",
+  "primary_color": "#10b981",
+  "z_index": 20
+}

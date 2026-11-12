@@ -1,0 +1,44 @@
+[
+  {
+    "clip_id": "edl_flip_cube",
+    "source_video_id": "nTp9hRWtlB4",
+    "product_name": "Flip Cube Timer",
+    "master_profile": "ADHD Tech & Gadget Reviews (Default)",
+    "padded_in": "2.750s",
+    "padded_out": "5.080s",
+    "duration_sec": 2.33,
+    "formats_exported": "16:9_YouTube_1080p, 9:16_Vertical_Shorts",
+    "affiliate_link": "https://amzn.to/adhd-flip-cube",
+    "qa_status": "PASSED_4_OF_4_CHECKS",
+    "drive_folder_id": "1wF355bFfBSyiS_N1tMkONQWWozuNjIQ0",
+    "transcript_snippet": "First up is the flip cube timer rechargeable via USB-C."
+  },
+  {
+    "clip_id": "edl_radial_timer",
+    "source_video_id": "nTp9hRWtlB4",
+    "product_name": "Radial Visual Timer",
+    "master_profile": "ADHD Tech & Gadget Reviews (Default)",
+    "padded_in": "5.950s",
+    "padded_out": "8.580s",
+    "duration_sec": 2.63,
+    "formats_exported": "16:9_YouTube_1080p, 9:16_Vertical_Shorts",
+    "affiliate_link": "https://amzn.to/adhd-radial-timer",
+    "qa_status": "PASSED_4_OF_4_CHECKS",
+    "drive_folder_id": "1wF355bFfBSyiS_N1tMkONQWWozuNjIQ0",
+    "transcript_snippet": "Next let's look at the radial timer with the visual countdown disc."
+  },
+  {
+    "clip_id": "edl_pill_bottle",
+    "source_video_id": "nTp9hRWtlB4",
+    "product_name": "Timer Capsule Pill Bottle",
+    "master_profile": "ADHD Tech & Gadget Reviews (Default)",
+    "padded_in": "9.450s",
+    "padded_out": "12.380s",
+    "duration_sec": 2.93,
+    "formats_exported": "16:9_YouTube_1080p, 9:16_Vertical_Shorts",
+    "affiliate_link": "https://amzn.to/adhd-timer-cap",
+    "qa_status": "PASSED_4_OF_4_CHECKS",
+    "drive_folder_id": "1wF355bFfBSyiS_N1tMkONQWWozuNjIQ0",
+    "transcript_snippet": "And finally our third gadget is the timer capsule pill bottle."
+  }
+]

@@ -1,0 +1,16 @@
+[Script Info]
+Title: Radial Visual Timer Top-Layer Captions
+ScriptType: v4.00+
+PlayResX: 1920
+PlayResY: 1080
+WrapStyle: 0
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: TopLayerPill,Inter,52,&H00FFFFFF,&H0000FFFF,&H00141A24,&H800B0F17,-1,0,0,0,100,100,0,0,3,3,0,2,60,60,85,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 30,0:00:00.00,0:00:01.00,TopLayerPill,,0,0,0,,Next let's look at the
+Dialogue: 30,0:00:01.00,0:00:02.00,TopLayerPill,,0,0,0,,radial timer with the visual
+Dialogue: 30,0:00:02.00,0:00:02.63,TopLayerPill,,0,0,0,,countdown disc.

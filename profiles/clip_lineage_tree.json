@@ -1,0 +1,358 @@
+{
+  "updated_at": "2026-11-12T05:13:25.346792Z",
+  "master_video": {
+    "node_id": "master_nTp9hRWtlB4",
+    "hierarchy_level": "0_MASTER_VIDEO",
+    "title": "3 EPIC ADHD TIMERS _ go take ur adderall before watching this.mp4",
+    "youtube_id": "nTp9hRWtlB4",
+    "video_folder_id": "1kX2lDJC6I306sqT79QbBmINNcSP_7rQN",
+    "video_folder_url": "https://drive.google.com/drive/folders/1kX2lDJC6I306sqT79QbBmINNcSP_7rQN",
+    "clips_folder_id": "1dzQaejxrM3Y6Gqe58BazhdsEq5PdMPai",
+    "clips_folder_url": "https://drive.google.com/drive/folders/1dzQaejxrM3Y6Gqe58BazhdsEq5PdMPai",
+    "drive_file_id": "1gGjzFKXmDSS_dR0aCzlF84M4TvZTIvl8",
+    "drive_view_url": "https://drive.google.com/file/d/1gGjzFKXmDSS_dR0aCzlF84M4TvZTIvl8/view",
+    "duration_sec": 485.62,
+    "resolution": "1280x720",
+    "size": "87.0 MB"
+  },
+  "clips_lineage": [
+    {
+      "clip_id": "edl_flip_cube_16x9",
+      "base_anchor_id": "edl_flip_cube",
+      "title": "Flip Cube Timer \u2014 Full Feature Breakdown (Parent Clip)",
+      "hierarchy_level": "1_PARENT_CLIP",
+      "clip_role": "Product #1 Review Chapter (16:9)",
+      "root_master_id": "master_nTp9hRWtlB4",
+      "parent_clip_id": "master_nTp9hRWtlB4",
+      "ancestor_ids": [
+        "master_nTp9hRWtlB4"
+      ],
+      "child_clip_ids": [
+        "edl_flip_cube_9x16_short",
+        "subclip_flip_cube_broll_16x9"
+      ],
+      "master_start_sec": 74.7,
+      "master_end_sec": 94.96,
+      "parent_relative_start_sec": 74.7,
+      "parent_relative_end_sec": 94.96,
+      "duration_sec": 20.26,
+      "aspect_ratio": "16:9",
+      "resolution": "1280x720",
+      "local_stream_url": "/media/clips/edl_flip_cube_16x9.mp4",
+      "fingerprint": "fp_1915bb1e860e",
+      "qa_status": "PASSED_4_OF_4_CHECKS",
+      "in_drive_verified": true,
+      "drive_file_id": "1TJK7volDI-ta54-xQi00-8kzovq3oQEg",
+      "drive_file_name": "edl_flip_cube_16x9.mp4",
+      "drive_size": "6.9 MB",
+      "drive_view_url": "https://drive.google.com/file/d/1TJK7volDI-ta54-xQi00-8kzovq3oQEg/view",
+      "drive_folder_url": "https://drive.google.com/drive/folders/1dzQaejxrM3Y6Gqe58BazhdsEq5PdMPai"
+    },
+    {
+      "clip_id": "edl_flip_cube_9x16_short",
+      "base_anchor_id": "edl_flip_cube",
+      "title": "Hook #1: Silent Gravity Flip Cube (9:16 Sub-Clip)",
+      "hierarchy_level": "2_CHILD_SUBCLIP",
+      "clip_role": "9:16 Vertical Short (Child of Flip Cube Parent & Master)",
+      "root_master_id": "master_nTp9hRWtlB4",
+      "parent_clip_id": "edl_flip_cube_16x9",
+      "ancestor_ids": [
+        "master_nTp9hRWtlB4",
+        "edl_flip_cube_16x9"
+      ],
+      "child_clip_ids": [],
+      "master_start_sec": 74.7,
+      "master_end_sec": 94.96,
+      "parent_relative_start_sec": 0.0,
+      "parent_relative_end_sec": 20.26,
+      "duration_sec": 20.26,
+      "aspect_ratio": "9:16",
+      "resolution": "720x1280",
+      "local_stream_url": "/media/clips/edl_flip_cube_9x16_short.mp4",
+      "fingerprint": "fp_60cdcf3013c5",
+      "qa_status": "PASSED_4_OF_4_CHECKS",
+      "in_drive_verified": true,
+      "drive_file_id": "1N_MZ1IEnH1gv8kpfVnIj9Kzi0_hVGhF1",
+      "drive_file_name": "edl_flip_cube_9x16_short.mp4",
+      "drive_size": "5.3 MB",
+      "drive_view_url": "https://drive.google.com/file/d/1N_MZ1IEnH1gv8kpfVnIj9Kzi0_hVGhF1/view",
+      "drive_folder_url": "https://drive.google.com/drive/folders/1dzQaejxrM3Y6Gqe58BazhdsEq5PdMPai"
+    },
+    {
+      "clip_id": "subclip_flip_cube_broll_16x9",
+      "base_anchor_id": "edl_flip_cube",
+      "title": "B-Roll Sub-Clip: Flip Cube 5/15/30m Side-Flip Macro (12s)",
+      "hierarchy_level": "2_CHILD_SUBCLIP",
+      "clip_role": "Clean B-Roll Sub-Clip (Cut from Parent Clip #1 [00:07.3 -> 00:19.3])",
+      "root_master_id": "master_nTp9hRWtlB4",
+      "parent_clip_id": "edl_flip_cube_16x9",
+      "ancestor_ids": [
+        "master_nTp9hRWtlB4",
+        "edl_flip_cube_16x9"
+      ],
+      "child_clip_ids": [],
+      "master_start_sec": 82.0,
+      "master_end_sec": 94.0,
+      "parent_relative_start_sec": 7.3,
+      "parent_relative_end_sec": 19.3,
+      "duration_sec": 12.0,
+      "aspect_ratio": "16:9",
+      "resolution": "1280x720",
+      "local_stream_url": "/media/clips/subclip_flip_cube_broll_16x9.mp4",
+      "fingerprint": "fp_65054b31c803",
+      "qa_status": "PASSED_4_OF_4_CHECKS",
+      "in_drive_verified": true,
+      "drive_file_id": "1el5EYcBue2r-3R5_phFgDxJY-fSskZy3",
+      "drive_file_name": "subclip_flip_cube_broll_16x9.mp4",
+      "drive_size": "3.9 MB",
+      "drive_view_url": "https://drive.google.com/file/d/1el5EYcBue2r-3R5_phFgDxJY-fSskZy3/view",
+      "drive_folder_url": "https://drive.google.com/drive/folders/1dzQaejxrM3Y6Gqe58BazhdsEq5PdMPai"
+    },
+    {
+      "clip_id": "edl_radial_timer_16x9",
+      "base_anchor_id": "edl_radial_timer",
+      "title": "Radial Visual Timer \u2014 Pomodoro Countdown Test (Parent Clip)",
+      "hierarchy_level": "1_PARENT_CLIP",
+      "clip_role": "Product #2 Review Chapter (16:9)",
+      "root_master_id": "master_nTp9hRWtlB4",
+      "parent_clip_id": "master_nTp9hRWtlB4",
+      "ancestor_ids": [
+        "master_nTp9hRWtlB4"
+      ],
+      "child_clip_ids": [
+        "edl_radial_timer_9x16_short"
+      ],
+      "master_start_sec": 165.3,
+      "master_end_sec": 185.16,
+      "parent_relative_start_sec": 165.3,
+      "parent_relative_end_sec": 185.16,
+      "duration_sec": 19.86,
+      "aspect_ratio": "16:9",
+      "resolution": "1280x720",
+      "local_stream_url": "/media/clips/edl_radial_timer_16x9.mp4",
+      "fingerprint": "fp_1360423c1857",
+      "qa_status": "PASSED_4_OF_4_CHECKS",
+      "in_drive_verified": true,
+      "drive_file_id": "1DMoQ4XwXKhknVzBOB9M_xccNFXEXLWQ7",
+      "drive_file_name": "edl_radial_timer_16x9.mp4",
+      "drive_size": "5.7 MB",
+      "drive_view_url": "https://drive.google.com/file/d/1DMoQ4XwXKhknVzBOB9M_xccNFXEXLWQ7/view",
+      "drive_folder_url": "https://drive.google.com/drive/folders/1dzQaejxrM3Y6Gqe58BazhdsEq5PdMPai"
+    },
+    {
+      "clip_id": "edl_radial_timer_9x16_short",
+      "base_anchor_id": "edl_radial_timer",
+      "title": "Hook #2: Cure Time Blindness Visually (9:16 Sub-Clip)",
+      "hierarchy_level": "2_CHILD_SUBCLIP",
+      "clip_role": "9:16 Vertical Short (Child of Radial Timer Parent & Master)",
+      "root_master_id": "master_nTp9hRWtlB4",
+      "parent_clip_id": "edl_radial_timer_16x9",
+      "ancestor_ids": [
+        "master_nTp9hRWtlB4",
+        "edl_radial_timer_16x9"
+      ],
+      "child_clip_ids": [],
+      "master_start_sec": 165.3,
+      "master_end_sec": 185.16,
+      "parent_relative_start_sec": 0.0,
+      "parent_relative_end_sec": 19.86,
+      "duration_sec": 19.86,
+      "aspect_ratio": "9:16",
+      "resolution": "720x1280",
+      "local_stream_url": "/media/clips/edl_radial_timer_9x16_short.mp4",
+      "fingerprint": "fp_6bcb529e440c",
+      "qa_status": "PASSED_4_OF_4_CHECKS",
+      "in_drive_verified": true,
+      "drive_file_id": "12zJS7G1TUh-4D1mELgRWrwf3ESR2txLB",
+      "drive_file_name": "edl_radial_timer_9x16_short.mp4",
+      "drive_size": "4.3 MB",
+      "drive_view_url": "https://drive.google.com/file/d/12zJS7G1TUh-4D1mELgRWrwf3ESR2txLB/view",
+      "drive_folder_url": "https://drive.google.com/drive/folders/1dzQaejxrM3Y6Gqe58BazhdsEq5PdMPai"
+    },
+    {
+      "clip_id": "edl_pill_bottle_16x9",
+      "base_anchor_id": "edl_pill_bottle",
+      "title": "Timer Capsule Pill Bottle \u2014 Lid Memory Demo (Parent Clip)",
+      "hierarchy_level": "1_PARENT_CLIP",
+      "clip_role": "Product #3 Review Chapter (16:9)",
+      "root_master_id": "master_nTp9hRWtlB4",
+      "parent_clip_id": "master_nTp9hRWtlB4",
+      "ancestor_ids": [
+        "master_nTp9hRWtlB4"
+      ],
+      "child_clip_ids": [
+        "edl_pill_bottle_9x16_short"
+      ],
+      "master_start_sec": 270.4,
+      "master_end_sec": 290.16,
+      "parent_relative_start_sec": 270.4,
+      "parent_relative_end_sec": 290.16,
+      "duration_sec": 19.76,
+      "aspect_ratio": "16:9",
+      "resolution": "1280x720",
+      "local_stream_url": "/media/clips/edl_pill_bottle_16x9.mp4",
+      "fingerprint": "fp_373fa24d4b7d",
+      "qa_status": "PASSED_4_OF_4_CHECKS",
+      "in_drive_verified": true,
+      "drive_file_id": "1M2YSQWEzzTMUc8Y0aTTPKEp6KffGCj6M",
+      "drive_file_name": "edl_pill_bottle_16x9.mp4",
+      "drive_size": "7.6 MB",
+      "drive_view_url": "https://drive.google.com/file/d/1M2YSQWEzzTMUc8Y0aTTPKEp6KffGCj6M/view",
+      "drive_folder_url": "https://drive.google.com/drive/folders/1dzQaejxrM3Y6Gqe58BazhdsEq5PdMPai"
+    },
+    {
+      "clip_id": "edl_pill_bottle_9x16_short",
+      "base_anchor_id": "edl_pill_bottle",
+      "title": "Hook #3: 'Did I Take My Meds?' LCD Cap (9:16 Sub-Clip)",
+      "hierarchy_level": "2_CHILD_SUBCLIP",
+      "clip_role": "9:16 Vertical Short (Child of Pill Bottle Parent & Master)",
+      "root_master_id": "master_nTp9hRWtlB4",
+      "parent_clip_id": "edl_pill_bottle_16x9",
+      "ancestor_ids": [
+        "master_nTp9hRWtlB4",
+        "edl_pill_bottle_16x9"
+      ],
+      "child_clip_ids": [],
+      "master_start_sec": 270.4,
+      "master_end_sec": 290.16,
+      "parent_relative_start_sec": 0.0,
+      "parent_relative_end_sec": 19.76,
+      "duration_sec": 19.76,
+      "aspect_ratio": "9:16",
+      "resolution": "720x1280",
+      "local_stream_url": "/media/clips/edl_pill_bottle_9x16_short.mp4",
+      "fingerprint": "fp_222c59dd08a1",
+      "qa_status": "PASSED_4_OF_4_CHECKS",
+      "in_drive_verified": true,
+      "drive_file_id": "1sof9Fbf44SOZKUYzQqUNrNifGV30c_PE",
+      "drive_file_name": "edl_pill_bottle_9x16_short.mp4",
+      "drive_size": "6.0 MB",
+      "drive_view_url": "https://drive.google.com/file/d/1sof9Fbf44SOZKUYzQqUNrNifGV30c_PE/view",
+      "drive_folder_url": "https://drive.google.com/drive/folders/1dzQaejxrM3Y6Gqe58BazhdsEq5PdMPai"
+    }
+  ],
+  "processing_status_list": [
+    {
+      "video_id": "nTp9hRWtlB4",
+      "video_title": "3 Epic ADHD Timers _ go take ur adderall before watching this",
+      "video_folder_id": "1kX2lDJC6I306sqT79QbBmINNcSP_7rQN",
+      "video_folder_url": "https://drive.google.com/drive/folders/1kX2lDJC6I306sqT79QbBmINNcSP_7rQN",
+      "clips_folder_id": "1dzQaejxrM3Y6Gqe58BazhdsEq5PdMPai",
+      "clips_folder_url": "https://drive.google.com/drive/folders/1dzQaejxrM3Y6Gqe58BazhdsEq5PdMPai",
+      "overall_readiness_pct": 100,
+      "what_else_needed": "All 7 stages complete & verified in Google Drive! Ready for NLE compilation or sub-clip slicing.",
+      "stages": [
+        {
+          "stage_num": 1,
+          "name": "Drive Folder Hierarchy (`<Video Title>` + `Clips/`)",
+          "done": true,
+          "detail": "Folder ID: 1kX2lDJC6I306sqT79QbBmINNcSP_7rQN | Clips Subfolder ID: 1dzQaejxrM3Y6Gqe58BazhdsEq5PdMPai",
+          "drive_url": "https://drive.google.com/drive/folders/1kX2lDJC6I306sqT79QbBmINNcSP_7rQN"
+        },
+        {
+          "stage_num": 2,
+          "name": "Master Full-Length Video File in Drive",
+          "done": true,
+          "detail": "3 EPIC ADHD TIMERS...mp4 (87.0 MB, 08:05.6, 1280x720 H.264/AAC)",
+          "drive_url": "https://drive.google.com/file/d/1gGjzFKXmDSS_dR0aCzlF84M4TvZTIvl8/view"
+        },
+        {
+          "stage_num": 3,
+          "name": "Raw Transcript Extracted / Cached",
+          "done": true,
+          "detail": "Phrase-level captions extracted & cached locally + in Drive",
+          "drive_url": "https://drive.google.com/file/d/1KiDKQJ5KwKo7SVpLif-VLu1t0KIdu226/view"
+        },
+        {
+          "stage_num": 4,
+          "name": "Detailed Millisecond Transcript & Silence Map (`takes_packed.md`)",
+          "done": true,
+          "detail": "nTp9hRWtlB4_takes_packed.md (ID: 1KiDKQJ5KwKo7SVpLif-VLu1t0KIdu226) with -50ms/+80ms Cut-Craft bounds",
+          "drive_url": "https://drive.google.com/file/d/1KiDKQJ5KwKo7SVpLif-VLu1t0KIdu226/view"
+        },
+        {
+          "stage_num": 5,
+          "name": "Audio Loudness & Silence Floor Profiled",
+          "done": true,
+          "detail": "-30dB silence threshold mapped; 25ms anti-pop afade filters active",
+          "drive_url": "https://drive.google.com/drive/folders/1kX2lDJC6I306sqT79QbBmINNcSP_7rQN"
+        },
+        {
+          "stage_num": 6,
+          "name": "AI Scene & Product EDL Storyboard (`edl_storyboard.json`)",
+          "done": true,
+          "detail": "3 Parent Product Chapters + 4 Child Sub-Clips mapped with affiliate anchors",
+          "drive_url": "https://drive.google.com/drive/folders/1kX2lDJC6I306sqT79QbBmINNcSP_7rQN"
+        },
+        {
+          "stage_num": 7,
+          "name": "Parent & Child Clips Sliced, QA-Verified & Uploaded to `Clips/`",
+          "done": true,
+          "detail": "7 MP4 clips verified in Drive `Clips/` folder (Zero duplicates)",
+          "drive_url": "https://drive.google.com/drive/folders/1dzQaejxrM3Y6Gqe58BazhdsEq5PdMPai"
+        }
+      ]
+    },
+    {
+      "video_id": "adhd_desk_v2",
+      "video_title": "Ultimate ADHD Desk Setup & Focus Gadgets (YouTube Channel Source)",
+      "video_folder_id": "pending_auto_create",
+      "video_folder_url": "https://drive.google.com/drive/folders/1Fg1MkNaxC5m7Fqzi_-RSZled2ymxkCvk",
+      "clips_folder_id": "pending_auto_create",
+      "clips_folder_url": "https://drive.google.com/drive/folders/1Fg1MkNaxC5m7Fqzi_-RSZled2ymxkCvk",
+      "overall_readiness_pct": 15,
+      "what_else_needed": "Needs Master MP4 pulled from YouTube (or linked from Drive/Takeout), `takes_packed.md` generated, and Parent/Child clips sliced.",
+      "stages": [
+        {
+          "stage_num": 1,
+          "name": "Drive Folder Hierarchy (`<Video Title>` + `Clips/`)",
+          "done": false,
+          "detail": "Will auto-create inside `Full Videos` on task start",
+          "drive_url": "https://drive.google.com/drive/folders/1Fg1MkNaxC5m7Fqzi_-RSZled2ymxkCvk"
+        },
+        {
+          "stage_num": 2,
+          "name": "Master Full-Length Video File in Drive",
+          "done": false,
+          "detail": "Not in Drive yet \u2014 Click 'Auto-Link or Pull Source' to ingest",
+          "drive_url": "https://www.youtube.com/channel/UCBncVyCemJoHiIK7ge6keFw"
+        },
+        {
+          "stage_num": 3,
+          "name": "Raw Transcript Extracted / Cached",
+          "done": false,
+          "detail": "Pending source video ingestion",
+          "drive_url": ""
+        },
+        {
+          "stage_num": 4,
+          "name": "Detailed Millisecond Transcript & Silence Map (`takes_packed.md`)",
+          "done": false,
+          "detail": "Pending Stage 3",
+          "drive_url": ""
+        },
+        {
+          "stage_num": 5,
+          "name": "Audio Loudness & Silence Floor Profiled",
+          "done": false,
+          "detail": "Pending Stage 2",
+          "drive_url": ""
+        },
+        {
+          "stage_num": 6,
+          "name": "AI Scene & Product EDL Storyboard (`edl_storyboard.json`)",
+          "done": false,
+          "detail": "Pending Stage 4",
+          "drive_url": ""
+        },
+        {
+          "stage_num": 7,
+          "name": "Parent & Child Clips Sliced, QA-Verified & Uploaded to `Clips/`",
+          "done": false,
+          "detail": "0 clips in Drive",
+          "drive_url": ""
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "clip_id": "edl_flip_cube",
+  "title": "Flip Cube Timer",
+  "subtitle": "Rating: 4.8/5 \u2022 $19.99",
+  "cta_badge": "Link in Description: https://amzn.to/adhd-flip-cube",
+  "appear_at_offset_sec": 1.0,
+  "hold_duration_sec": 5.5,
+  "easing": "cubic-bezier(0.22, 1, 0.36, 1)",
+  "primary_color": "#10b981",
+  "z_index": 20
+}

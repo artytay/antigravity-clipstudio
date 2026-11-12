@@ -1,0 +1,184 @@
+{
+  "active_profile_id": "adhd_product_reviews",
+  "profiles": {
+    "adhd_product_reviews": {
+      "id": "adhd_product_reviews",
+      "name": "ADHD Tech & Gadget Reviews (Default)",
+      "description": "Balanced pacing for multi-product review videos with affiliate lower-thirds and clean silence snapping.",
+      "slicing_mode": "lossless_copy",
+      "cut_craft": {
+        "pre_word_pad_ms": 50,
+        "post_word_pad_ms": 80,
+        "audio_fade_ms": 25,
+        "min_silence_gap_ms": 400,
+        "snap_search_radius_sec": 2.0,
+        "silence_threshold_db": -30,
+        "strip_fillers": true,
+        "strip_retakes": true
+      },
+      "aspect_ratios": {
+        "export_16_9": true,
+        "export_9_16": true,
+        "vertical_crop_mode": "center_subject"
+      },
+      "overlays_and_captions": {
+        "enable_lower_thirds": true,
+        "lower_third_delay_sec": 1.0,
+        "lower_third_duration_sec": 5.5,
+        "easing_curve": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "enable_top_layer_captions": true,
+        "caption_style": "word_highlight_pill",
+        "primary_color": "#10b981",
+        "accent_color": "#38bdf8",
+        "font_family": "Inter"
+      },
+      "assembly": {
+        "attach_intro": true,
+        "attach_outro": true,
+        "intro_template": "channel_hook_slate.mp4",
+        "outro_template": "affiliate_cta_outro.mp4",
+        "auto_upload_drive": true,
+        "auto_sync_catalog": true
+      },
+      "product_anchors": [
+        {
+          "id": "flip_cube",
+          "name": "Flip Cube Timer",
+          "keywords": [
+            "flip cube",
+            "cube timer",
+            "flip timer",
+            "usb-c"
+          ],
+          "affiliate_slug": "https://amzn.to/adhd-flip-cube",
+          "price": "$19.99",
+          "rating": "4.8/5",
+          "color": "emerald"
+        },
+        {
+          "id": "radial_timer",
+          "name": "Radial Visual Timer",
+          "keywords": [
+            "radial timer",
+            "visual countdown",
+            "red disc",
+            "pomodoro"
+          ],
+          "affiliate_slug": "https://amzn.to/adhd-radial-timer",
+          "price": "$24.50",
+          "rating": "4.9/5",
+          "color": "purple"
+        },
+        {
+          "id": "pill_bottle",
+          "name": "Timer Capsule Pill Bottle",
+          "keywords": [
+            "pill bottle",
+            "timer cap",
+            "capsule",
+            "double-dose"
+          ],
+          "affiliate_slug": "https://amzn.to/adhd-timer-cap",
+          "price": "$16.95",
+          "rating": "4.7/5",
+          "color": "amber"
+        }
+      ]
+    },
+    "viral_shorts_fast": {
+      "id": "viral_shorts_fast",
+      "name": "High-Retention Viral Shorts (9:16 Fast Cut)",
+      "description": "Tighter word padding (30ms/50ms), aggressive silence removal (>=250ms), bold pill captions, 9:16 vertical priority.",
+      "slicing_mode": "frame_accurate_reencode",
+      "cut_craft": {
+        "pre_word_pad_ms": 30,
+        "post_word_pad_ms": 50,
+        "audio_fade_ms": 20,
+        "min_silence_gap_ms": 250,
+        "snap_search_radius_sec": 1.5,
+        "silence_threshold_db": -28,
+        "strip_fillers": true,
+        "strip_retakes": true
+      },
+      "aspect_ratios": {
+        "export_16_9": false,
+        "export_9_16": true,
+        "vertical_crop_mode": "center_subject"
+      },
+      "overlays_and_captions": {
+        "enable_lower_thirds": true,
+        "lower_third_delay_sec": 0.5,
+        "lower_third_duration_sec": 3.5,
+        "easing_curve": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "enable_top_layer_captions": true,
+        "caption_style": "hormozi_pop_yellow",
+        "primary_color": "#f59e0b",
+        "accent_color": "#ec4899",
+        "font_family": "Montserrat"
+      },
+      "assembly": {
+        "attach_intro": false,
+        "attach_outro": true,
+        "intro_template": "none",
+        "outro_template": "fast_link_in_bio.mp4",
+        "auto_upload_drive": true,
+        "auto_sync_catalog": true
+      },
+      "product_anchors": [
+        {
+          "id": "flip_cube",
+          "name": "Flip Cube Timer",
+          "keywords": [
+            "flip cube",
+            "cube timer"
+          ],
+          "affiliate_slug": "https://amzn.to/adhd-flip-cube",
+          "price": "$19.99",
+          "rating": "4.8/5",
+          "color": "emerald"
+        }
+      ]
+    },
+    "broll_library_archiver": {
+      "id": "broll_library_archiver",
+      "name": "Clean B-Roll & Raw Library Archiver",
+      "description": "Zero overlays or burned-in subtitles. Lossless stream copy (-c copy) with generous 150ms breathing room for reusable B-roll.",
+      "slicing_mode": "lossless_copy",
+      "cut_craft": {
+        "pre_word_pad_ms": 120,
+        "post_word_pad_ms": 150,
+        "audio_fade_ms": 30,
+        "min_silence_gap_ms": 500,
+        "snap_search_radius_sec": 2.5,
+        "silence_threshold_db": -32,
+        "strip_fillers": false,
+        "strip_retakes": true
+      },
+      "aspect_ratios": {
+        "export_16_9": true,
+        "export_9_16": false,
+        "vertical_crop_mode": "none"
+      },
+      "overlays_and_captions": {
+        "enable_lower_thirds": false,
+        "lower_third_delay_sec": 0.0,
+        "lower_third_duration_sec": 0.0,
+        "easing_curve": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "enable_top_layer_captions": false,
+        "caption_style": "none",
+        "primary_color": "#38bdf8",
+        "accent_color": "#94a3b8",
+        "font_family": "Inter"
+      },
+      "assembly": {
+        "attach_intro": false,
+        "attach_outro": false,
+        "intro_template": "none",
+        "outro_template": "none",
+        "auto_upload_drive": true,
+        "auto_sync_catalog": true
+      },
+      "product_anchors": []
+    }
+  }
+}

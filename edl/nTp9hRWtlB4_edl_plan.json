@@ -1,0 +1,76 @@
+{
+  "video_id": "nTp9hRWtlB4",
+  "profile_used": "adhd_product_reviews",
+  "profile_name": "ADHD Tech & Gadget Reviews (Default)",
+  "generated_at": "2026-11-12T05:37:11.240745Z",
+  "layer_order_rule": [
+    "1_base_video_cut",
+    "2_cubic_bezier_lower_third",
+    "3_top_layer_captions_last"
+  ],
+  "clips": [
+    {
+      "clip_id": "edl_flip_cube",
+      "product_name": "Flip Cube Timer",
+      "affiliate_slug": "https://amzn.to/adhd-flip-cube",
+      "price": "$19.99",
+      "rating": "4.8/5",
+      "color": "emerald",
+      "raw_start": 2.8,
+      "raw_end": 5.0,
+      "padded_start": 2.75,
+      "padded_end": 5.08,
+      "duration": 2.33,
+      "audio_fade_ms": 25,
+      "lower_third_trigger_sec": 3.75,
+      "export_formats": [
+        "16:9_YouTube_1080p",
+        "9:16_Vertical_Shorts"
+      ],
+      "transcript_excerpt": "First up is the flip cube timer rechargeable via USB-C.",
+      "approved": true
+    },
+    {
+      "clip_id": "edl_radial_timer",
+      "product_name": "Radial Visual Timer",
+      "affiliate_slug": "https://amzn.to/adhd-radial-timer",
+      "price": "$24.50",
+      "rating": "4.9/5",
+      "color": "purple",
+      "raw_start": 6.0,
+      "raw_end": 8.5,
+      "padded_start": 5.95,
+      "padded_end": 8.58,
+      "duration": 2.63,
+      "audio_fade_ms": 25,
+      "lower_third_trigger_sec": 6.95,
+      "export_formats": [
+        "16:9_YouTube_1080p",
+        "9:16_Vertical_Shorts"
+      ],
+      "transcript_excerpt": "Next let's look at the radial timer with the visual countdown disc.",
+      "approved": true
+    },
+    {
+      "clip_id": "edl_pill_bottle",
+      "product_name": "Timer Capsule Pill Bottle",
+      "affiliate_slug": "https://amzn.to/adhd-timer-cap",
+      "price": "$16.95",
+      "rating": "4.7/5",
+      "color": "amber",
+      "raw_start": 9.5,
+      "raw_end": 12.3,
+      "padded_start": 9.45,
+      "padded_end": 12.38,
+      "duration": 2.93,
+      "audio_fade_ms": 25,
+      "lower_third_trigger_sec": 10.45,
+      "export_formats": [
+        "16:9_YouTube_1080p",
+        "9:16_Vertical_Shorts"
+      ],
+      "transcript_excerpt": "And finally our third gadget is the timer capsule pill bottle.",
+      "approved": true
+    }
+  ]
+}

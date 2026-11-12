@@ -1,0 +1,62 @@
+{
+  "profile_name": "ADHD Productivity & Gadget Reviews",
+  "version": "1.3.0",
+  "cut_craft": {
+    "pre_word_pad_ms": 50,
+    "post_word_pad_ms": 80,
+    "audio_fade_ms": 25,
+    "min_silence_gap_ms": 400,
+    "usable_phrase_gap_ms": 150,
+    "unsafe_gap_ms": 150,
+    "snap_search_radius_sec": 2.0,
+    "silence_threshold_db": -30
+  },
+  "aesthetic_anchors": {
+    "primary_color": "#10b981",
+    "secondary_color": "#38bdf8",
+    "accent_color": "#f59e0b",
+    "font_heading": "Inter",
+    "font_mono": "JetBrains Mono",
+    "easing_curve": "cubic-bezier(0.22, 1, 0.36, 1)",
+    "caption_style": "word_highlight_pill",
+    "subtitle_layer_order": "last_after_overlays"
+  },
+  "product_anchors": [
+    {
+      "id": "flip_cube",
+      "name": "Flip Cube Timer",
+      "keywords": [
+        "flip cube",
+        "cube timer",
+        "flip timer",
+        "usb-c"
+      ],
+      "affiliate_slug": "https://amzn.to/adhd-flip-cube",
+      "color": "emerald"
+    },
+    {
+      "id": "radial_timer",
+      "name": "Radial Visual Timer",
+      "keywords": [
+        "radial timer",
+        "visual countdown",
+        "red disc",
+        "pomodoro"
+      ],
+      "affiliate_slug": "https://amzn.to/adhd-radial-timer",
+      "color": "purple"
+    },
+    {
+      "id": "pill_bottle",
+      "name": "Timer Capsule Pill Bottle",
+      "keywords": [
+        "pill bottle",
+        "timer cap",
+        "capsule",
+        "double-dose"
+      ],
+      "affiliate_slug": "https://amzn.to/adhd-timer-cap",
+      "color": "amber"
+    }
+  ]
+}

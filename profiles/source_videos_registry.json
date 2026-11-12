@@ -1,0 +1,75 @@
+{
+  "scanned_at": "2026-11-12T05:13:25.346114Z",
+  "source_videos_root_id": "1PLLjdQtqU9JxdVWsbXJZ5N5z6lSpNqwW",
+  "full_videos_folder_id": "1Fg1MkNaxC5m7Fqzi_-RSZled2ymxkCvk",
+  "total_source_video_folders": 1,
+  "source_videos": [
+    {
+      "video_folder_id": "1kX2lDJC6I306sqT79QbBmINNcSP_7rQN",
+      "video_title": "3 Epic ADHD Timers _ go take ur adder...",
+      "master_video": {
+        "id": "1gGjzFKXmDSS_dR0aCzlF84M4TvZTIvl8",
+        "name": "3 EPIC ADHD TIMERS _ go take ur adder...",
+        "type": "video/mp4",
+        "size": "87.0 MB"
+      },
+      "clips_folder": {
+        "id": "1dzQaejxrM3Y6Gqe58BazhdsEq5PdMPai",
+        "name": "Clips",
+        "type": "folder",
+        "size": "0 B"
+      },
+      "transcript_file": {
+        "id": "1KiDKQJ5KwKo7SVpLif-VLu1t0KIdu226",
+        "name": "nTp9hRWtlB4_takes_packed.md",
+        "type": "text/markdown",
+        "size": "713 B"
+      },
+      "clips": [
+        {
+          "id": "1TJK7volDI-ta54-xQi00-8kzovq3oQEg",
+          "name": "edl_flip_cube_16x9.mp4",
+          "type": "video/mp4",
+          "size": "6.9 MB"
+        },
+        {
+          "id": "1N_MZ1IEnH1gv8kpfVnIj9Kzi0_hVGhF1",
+          "name": "edl_flip_cube_9x16_short.mp4",
+          "type": "video/mp4",
+          "size": "5.3 MB"
+        },
+        {
+          "id": "1M2YSQWEzzTMUc8Y0aTTPKEp6KffGCj6M",
+          "name": "edl_pill_bottle_16x9.mp4",
+          "type": "video/mp4",
+          "size": "7.6 MB"
+        },
+        {
+          "id": "1sof9Fbf44SOZKUYzQqUNrNifGV30c_PE",
+          "name": "edl_pill_bottle_9x16_short.mp4",
+          "type": "video/mp4",
+          "size": "6.0 MB"
+        },
+        {
+          "id": "1DMoQ4XwXKhknVzBOB9M_xccNFXEXLWQ7",
+          "name": "edl_radial_timer_16x9.mp4",
+          "type": "video/mp4",
+          "size": "5.7 MB"
+        },
+        {
+          "id": "12zJS7G1TUh-4D1mELgRWrwf3ESR2txLB",
+          "name": "edl_radial_timer_9x16_short.mp4",
+          "type": "video/mp4",
+          "size": "4.3 MB"
+        },
+        {
+          "id": "1el5EYcBue2r-3R5_phFgDxJY-fSskZy3",
+          "name": "subclip_flip_cube_broll_16x9.mp4",
+          "type": "video/mp4",
+          "size": "3.9 MB"
+        }
+      ],
+      "other_files": []
+    }
+  ]
+}

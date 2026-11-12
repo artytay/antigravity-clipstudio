@@ -1,0 +1,132 @@
+{
+  "scanned_at": "2026-11-12T04:46:09.141249Z",
+  "archive_count": 12,
+  "folder_count": 10,
+  "archives": [
+    {
+      "id": "17vg0kuH7583a-KGAkNDfch6Fkh45Py_g",
+      "name": "takeout-20260909T053955Z-1-001.zip",
+      "type": "archive",
+      "mime": "application/zip"
+    },
+    {
+      "id": "11BJ7fguuR96NYtzlxjF3h-384pYPMA5M",
+      "name": "takeout-20260909T063709Z-1-001.zip",
+      "type": "archive",
+      "mime": "application/zip"
+    },
+    {
+      "id": "1XeM38xk4tWg2zY1vzIetF3lZ_AmpwxQX",
+      "name": "takeout-20260909T053955Z-1-001.zip",
+      "type": "archive",
+      "mime": "application/zip"
+    },
+    {
+      "id": "1CKYgoBC0j2Th9NzIdc7kjw4WHGhqRlCv",
+      "name": "takeout-20260909T053955Z-001.zip",
+      "type": "archive",
+      "mime": "application/zip"
+    },
+    {
+      "id": "1GGgvf98df4YGsNz5VwGzkXVwPDvsfsjD",
+      "name": "takeout-20260909T045302Z-001.zip",
+      "type": "archive",
+      "mime": "application/zip"
+    },
+    {
+      "id": "1XrIq46yCG1CO8dAhu0RsxpShmM-VVguh",
+      "name": "takeout-20260909T045345Z-1-001.zip",
+      "type": "archive",
+      "mime": "application/zip"
+    },
+    {
+      "id": "1OlTmaIDAA0rGFaruR4xdiIqmbABmajdl",
+      "name": "takeout-20260909T045302Z-1-001.zip",
+      "type": "archive",
+      "mime": "application/zip"
+    },
+    {
+      "id": "195boBf_CxActAfTdqPW54ElffQ5Vi63l",
+      "name": "takeout-20260806T212254Z-001.zip",
+      "type": "archive",
+      "mime": "application/zip"
+    },
+    {
+      "id": "1yvGvVXi_3FkjiLHX_Hm7anBt6UgcPLzn",
+      "name": "takeout-20260806T212254Z-1-001.zip",
+      "type": "archive",
+      "mime": "application/zip"
+    },
+    {
+      "id": "1ZfhqyvxLQ973PeXpelsMtZCxd7xGsEVU",
+      "name": "takeout-20260806T211932Z-1-001.zip",
+      "type": "archive",
+      "mime": "application/zip"
+    },
+    {
+      "id": "1xLTxc38nGy8_UvzwJSlesyZJlnOvZstg",
+      "name": "takeout-20260806T211932Z-001.zip",
+      "type": "archive",
+      "mime": "application/x-zip"
+    },
+    {
+      "id": "1mtmQEjEJcsS_eZeHPeS9ycGp3V-rx5kg",
+      "name": "takeout-20260806T211932Z-1-001.zip",
+      "type": "archive",
+      "mime": "application/x-zip"
+    }
+  ],
+  "folders": [
+    {
+      "id": "1zWIbNLVcY1bfW1PP3k7UrmnGcYIAJIQ6",
+      "name": "Takeout 7",
+      "type": "folder"
+    },
+    {
+      "id": "19cdYEEv2oe_ZS5KLleFwONNeTbRufd93",
+      "name": "JSON Copy of Google Takeout Gemini My Activity",
+      "type": "folder"
+    },
+    {
+      "id": "144p9Sny5C6hoK15pytbIgyhflimNfWHI",
+      "name": "Takeout 6",
+      "type": "folder"
+    },
+    {
+      "id": "1WSATx2Dg9NC9jL7wecTsJjH5JhzJHUUe",
+      "name": "Takeout",
+      "type": "folder"
+    },
+    {
+      "id": "1Kx_tjY3lQaLBPRsoZgrlaEnSXrmxCVVg",
+      "name": "Takeout 5",
+      "type": "folder"
+    },
+    {
+      "id": "1Q3cl_4Bhurg2uoagFEfzPZLt84Bd7dof",
+      "name": "Takeout 4",
+      "type": "folder"
+    },
+    {
+      "id": "1J9krslGdvkVveK2IPRcOuWW_xjOR6wJx",
+      "name": "Takeout 3",
+      "type": "folder"
+    },
+    {
+      "id": "18MEm6oVLbERVLRsmUkT4xQRGE-91NSfS",
+      "name": "Takeout 2",
+      "type": "folder"
+    },
+    {
+      "id": "1PUsC8i5ieEoRn9UJyQEnX1oGlf0KJWbI",
+      "name": "Takeout",
+      "type": "folder"
+    },
+    {
+      "id": "1_MLT6jD9K9zNPd2Z2URl4svJWg51Ee0OLUeLLYcYa2QrrT3EJ7mBOBmorfxD4EcQzOJWESaa",
+      "name": "Takeout",
+      "type": "folder"
+    }
+  ],
+  "takeout_request_url": "https://takeout.google.com/settings/takeout/custom/youtube?dest=DRIVE"
+}
