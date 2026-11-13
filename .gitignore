@@ -1,6 +1,8 @@
 __pycache__/
 *.pyc
 cache/
-media/
 .DS_Store
 *.mp4
+!media/
+!media/proxies/
+!media/proxies/*.mp4

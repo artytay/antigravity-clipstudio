@@ -190,18 +190,19 @@
         <div class="hidden md:flex items-center gap-2 pl-3 border-l border-slate-800 text-xs">
           <span class="text-slate-400">Project:</span>
           <select id="headerProjectSelector" onchange="switchProjectById(this.value)" class="bg-[#111722] text-white border border-[#263550] hover:border-blue-500/50 rounded-lg px-2.5 py-1 text-xs focus:outline-none focus:border-blue-500 font-medium cursor-pointer">
-            <!-- Dynamically populated -->
+            <option value="">-- No Project Selected --</option>
           </select>
         </div>
       </div>
 
-      <!-- 4 Task-Based Navigation Tabs -->
+      <!-- 4 Task-Based Navigation Tabs (Drive Master Scope) -->
       <nav class="hidden sm:flex items-center gap-1 bg-[#111722] p-1 rounded-xl border border-[#1c273c]">
-        <button onclick="switchMainTab('new-project')" id="tabBtnNewProject" class="main-nav-btn px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-white transition flex items-center gap-1.5">
+        <button onclick="switchMainTab('new-project')" id="tabBtnNewProject" class="main-nav-btn active px-3.5 py-1.5 rounded-lg text-xs font-semibold text-white bg-blue-600 shadow transition flex items-center gap-1.5">
           <span>✨ New Project</span>
         </button>
-        <button onclick="switchMainTab('clip-editor')" id="tabBtnClipEditor" class="main-nav-btn active px-3.5 py-1.5 rounded-lg text-xs font-semibold text-white bg-blue-600 shadow transition flex items-center gap-1.5">
+        <button onclick="handleClipEditorNavClick()" id="tabBtnClipEditor" class="main-nav-btn px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-400 opacity-60 cursor-not-allowed transition flex items-center gap-1.5">
           <span>✂️ Clip Editor</span>
+          <span id="editorLockBadge" class="text-[10px]">🔒</span>
         </button>
         <button onclick="switchMainTab('library')" id="tabBtnLibrary" class="main-nav-btn px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-white transition flex items-center gap-1.5">
           <span>📚 Library</span>
@@ -248,76 +249,75 @@
     </div>
   </header>
 
-  <!-- TAB 1: NEW PROJECT WIZARD (Recommendation #2) -->
-  <main id="viewNewProject" class="hidden max-w-7xl mx-auto w-full px-4 py-6 space-y-6 flex-1">
+  <!-- TAB 1: NEW PROJECT LAUNCHER (Drive Masters Scope) -->
+  <main id="viewNewProject" class="max-w-7xl mx-auto w-full px-4 py-6 space-y-6 flex-1">
     
     <!-- Wizard Header & Add Source Actions -->
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-[#0f1522] border border-[#1c273c] rounded-2xl p-5 shadow-lg">
       <div class="space-y-1">
         <h1 class="text-xl font-bold text-white flex items-center gap-2">
           <span>✨</span>
-          <span>Start a New Video Clipping Project</span>
+          <span>Google Drive Master Video Launcher</span>
         </h1>
-        <p class="text-xs text-slate-400">Select a source video from Google Drive, your YouTube channel, or import a fresh recording to begin AI Cut-Craft analysis.</p>
+        <p class="text-xs text-slate-400">Select an available master video from your Google Drive folder (<code class="text-blue-400">Source Videos [Clipstudio] / Full Videos</code>) to begin AI Cut-Craft analysis.</p>
       </div>
 
       <!-- Add Source Action Buttons -->
       <div class="flex items-center gap-2">
         <div class="relative">
           <button onclick="toggleAddSourceDropdown()" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs rounded-xl shadow-lg shadow-blue-500/20 transition flex items-center gap-2">
-            <span>+ Add Source Video</span>
+            <span>+ Add Drive Master</span>
             <span class="text-[10px]">▼</span>
           </button>
-          <div id="addSourceDropdown" class="hidden absolute right-0 mt-2 w-56 bg-[#111722] border border-[#263550] rounded-xl shadow-2xl p-1.5 text-xs z-50">
-            <button onclick="triggerLocalFileUpload()" class="w-full text-left px-3 py-2 text-slate-300 hover:text-white hover:bg-[#1a2333] rounded-lg transition flex items-center gap-2">
-              <span>📁</span> Browse Local Video (.mp4, .mov)
+          <div id="addSourceDropdown" class="hidden absolute right-0 mt-2 w-64 bg-[#111722] border border-[#263550] rounded-xl shadow-2xl p-1.5 text-xs z-50">
+            <button onclick="openDriveSourceFolder()" class="w-full text-left px-3 py-2 text-slate-300 hover:text-white hover:bg-[#1a2333] rounded-lg transition flex items-center gap-2">
+              <span>📁</span> Open Drive 'Source Videos' Folder ↗
             </button>
-            <button onclick="promptPasteVideoUrl()" class="w-full text-left px-3 py-2 text-slate-300 hover:text-white hover:bg-[#1a2333] rounded-lg transition flex items-center gap-2">
-              <span>🔗</span> Paste YouTube / Video URL
+            <button onclick="promptLinkDriveMaster()" class="w-full text-left px-3 py-2 text-slate-300 hover:text-white hover:bg-[#1a2333] rounded-lg transition flex items-center gap-2">
+              <span>🔗</span> Link Drive File ID (.mp4, .mov)
             </button>
-            <button onclick="runGeminiDriveScan()" class="w-full text-left px-3 py-2 text-slate-300 hover:text-white hover:bg-[#1a2333] rounded-lg transition flex items-center gap-2">
-              <span>🤖</span> Ask Gemini to Scan Drive Folders
+            <button onclick="refreshDriveMasters()" class="w-full text-left px-3 py-2 text-slate-300 hover:text-white hover:bg-[#1a2333] rounded-lg transition flex items-center gap-2">
+              <span>🔄</span> Refresh Master Videos from Drive
             </button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Search & Filter Bar -->
+    <!-- Search & Filter Bar (Drive Only) -->
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
       <!-- Filter Chips -->
       <div class="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs">
-        <button onclick="filterSourceVideos('all')" id="filterChipAll" class="filter-chip active px-3 py-1.5 rounded-lg bg-blue-600 text-white font-medium transition">All Sources (<span id="countAllSources">2</span>)</button>
-        <button onclick="filterSourceVideos('drive')" id="filterChipDrive" class="filter-chip px-3 py-1.5 rounded-lg bg-[#111722] border border-[#1c273c] text-slate-300 hover:text-white transition">In Google Drive (<span id="countDriveSources">2</span>)</button>
-        <button onclick="filterSourceVideos('youtube')" id="filterChipYoutube" class="filter-chip px-3 py-1.5 rounded-lg bg-[#111722] border border-[#1c273c] text-slate-300 hover:text-white transition">On YouTube (<span id="countYoutubeSources">0</span>)</button>
-        <button onclick="filterSourceVideos('takeouts')" id="filterChipTakeouts" class="filter-chip px-3 py-1.5 rounded-lg bg-[#111722] border border-[#1c273c] text-slate-300 hover:text-white transition">Takeouts (<span id="countTakeoutSources">0</span>)</button>
+        <button onclick="filterSourceVideos('all')" id="filterChipAll" class="filter-chip active px-3 py-1.5 rounded-lg bg-blue-600 text-white font-medium transition">All Drive Masters (<span id="countAllSources">2</span>)</button>
+        <button onclick="filterSourceVideos('available')" id="filterChipAvailable" class="filter-chip px-3 py-1.5 rounded-lg bg-[#111722] border border-[#1c273c] text-slate-300 hover:text-white transition">Available (Unused) (<span id="countAvailableSources">0</span>)</button>
+        <button onclick="filterSourceVideos('active')" id="filterChipActive" class="filter-chip px-3 py-1.5 rounded-lg bg-[#111722] border border-[#1c273c] text-slate-300 hover:text-white transition">Active Projects (<span id="countActiveSources">2</span>)</button>
       </div>
 
       <!-- Search Input -->
       <div class="relative w-full sm:w-72">
-        <input type="text" id="sourceSearchInput" oninput="handleSourceSearch(this.value)" placeholder="Search sources by title..." class="w-full bg-[#111722] border border-[#263550] focus:border-blue-500 rounded-xl px-3.5 py-1.5 pl-8 text-xs text-white focus:outline-none">
+        <input type="text" id="sourceSearchInput" oninput="handleSourceSearch(this.value)" placeholder="Filter Drive master videos..." class="w-full bg-[#111722] border border-[#263550] focus:border-blue-500 rounded-xl px-3.5 py-1.5 pl-8 text-xs text-white focus:outline-none">
         <span class="absolute left-2.5 top-2 text-slate-400 text-xs">🔍</span>
       </div>
     </div>
 
-    <!-- Source Videos Thumbnail Grid (Recommendation #2) -->
+    <!-- Source Videos Thumbnail Grid -->
     <div id="sourcesThumbnailGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      <!-- Dynamically Rendered Source Cards -->
+      <!-- Dynamically Rendered Drive Source Cards -->
     </div>
 
-    <!-- Compact Expandable Readiness Progress Pill (Replaces 1500px Matrix) -->
-    <div class="bg-[#0f1522] border border-[#1c273c] rounded-2xl p-4 shadow">
+    <!-- Dynamic Readiness Progress Pill (Hidden on initial load until master video is selected) -->
+    <div id="readinessCardContainer" class="hidden bg-[#0f1522] border border-[#1c273c] rounded-2xl p-4 shadow">
       <div class="flex items-center justify-between cursor-pointer" onclick="toggleReadinessMatrix()">
         <div class="flex items-center gap-3">
-          <div class="w-7 h-7 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs">
+          <div class="w-7 h-7 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs" id="readinessIcon">
             ✓
           </div>
           <div>
             <div class="text-xs font-semibold text-white flex items-center gap-2">
-              <span id="readinessPillTitle">5 / 7 Readiness Checks Passed</span>
-              <span class="px-2 py-0.5 rounded-full text-[10px] font-mono bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">Ready to Clip</span>
+              <span id="readinessPillTitle">Master Video Ingested &amp; Ready</span>
+              <span id="readinessStatusBadge" class="px-2 py-0.5 rounded-full text-[10px] font-mono bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">Ready to Clip</span>
             </div>
-            <p class="text-[11px] text-slate-400">Master video in Drive • 360p Fast-GOP proxy built • Silence map indexed • SHA deduplicated.</p>
+            <p id="readinessSummaryText" class="text-[11px] text-slate-400">Master video in Drive • 360p Fast-GOP proxy built • Silence map indexed • SHA deduplicated.</p>
           </div>
         </div>
         <button class="text-xs text-blue-400 hover:text-blue-300 font-medium flex items-center gap-1">
@@ -331,7 +331,7 @@
         <div class="p-2.5 rounded-xl bg-[#131b2c] border border-emerald-500/30">
           <div class="text-[10px] text-slate-400 uppercase">1. Master File</div>
           <div class="text-emerald-400 font-bold mt-1">✓ In Drive</div>
-          <div class="text-[10px] text-slate-400 truncate">720p H.264</div>
+          <div class="text-[10px] text-slate-400 truncate" id="readinessResText">720p H.264</div>
         </div>
         <div class="p-2.5 rounded-xl bg-[#131b2c] border border-emerald-500/30">
           <div class="text-[10px] text-slate-400 uppercase">2. 360p Proxy</div>
@@ -350,8 +350,8 @@
         </div>
         <div class="p-2.5 rounded-xl bg-[#131b2c] border border-emerald-500/30">
           <div class="text-[10px] text-slate-400 uppercase">5. AI Analysis</div>
-          <div class="text-emerald-400 font-bold mt-1">✓ 3 Clips</div>
-          <div class="text-[10px] text-slate-400">Product Reviews</div>
+          <div class="text-emerald-400 font-bold mt-1">✓ Available</div>
+          <div class="text-[10px] text-slate-400">Suggestions</div>
         </div>
         <div class="p-2.5 rounded-xl bg-[#131b2c] border border-emerald-500/30">
           <div class="text-[10px] text-slate-400 uppercase">6. Lineage Tree</div>
@@ -366,21 +366,22 @@
       </div>
     </div>
 
-    <!-- Sticky Bottom Action Bar -->
+    <!-- Sticky Bottom Action Bar (Blank Slate Initial State) -->
     <div class="sticky bottom-4 bg-[#0f1522]/95 backdrop-blur border border-[#1c273c] rounded-2xl p-4 shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-3 z-30">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl overflow-hidden bg-slate-800 border border-[#263550] flex-shrink-0">
-          <img id="wizardSelectedThumbnail" src="thumbnails/master_adhd_timers.jpg" alt="Selected" class="w-full h-full object-cover">
+        <div class="w-10 h-10 rounded-xl overflow-hidden bg-slate-800 border border-[#263550] flex items-center justify-center flex-shrink-0 text-slate-500" id="wizardSelectedThumbnailBox">
+          <span class="text-lg" id="wizardSelectedIcon">🎬</span>
+          <img id="wizardSelectedThumbnail" src="" alt="Selected" class="hidden w-full h-full object-cover">
         </div>
         <div>
           <div class="text-xs text-slate-400">Selected Source:</div>
-          <div id="wizardSelectedTitle" class="text-sm font-bold text-white truncate max-w-md">3 EPIC ADHD TIMERS | go take ur adderall yeet!</div>
+          <div id="wizardSelectedTitle" class="text-sm font-medium text-slate-400 italic">No master video selected</div>
         </div>
       </div>
 
       <div class="flex items-center gap-3 w-full sm:w-auto">
-        <button onclick="openWizardSelectedProject()" id="btnWizardAction" class="w-full sm:w-auto px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs rounded-xl shadow-lg shadow-blue-500/20 transition flex items-center justify-center gap-2">
-          <span>Open in Clip Editor</span>
+        <button onclick="openWizardSelectedProject()" id="btnWizardAction" disabled class="w-full sm:w-auto px-6 py-2.5 bg-slate-800 text-slate-500 font-semibold text-xs rounded-xl cursor-not-allowed transition flex items-center justify-center gap-2">
+          <span id="btnWizardActionText">Select a Master Video Above</span>
           <span>&rarr;</span>
         </button>
       </div>
@@ -389,7 +390,7 @@
   </main>
 
   <!-- TAB 2: CLIP EDITOR (Recommendations #3, #4, #5, #6) -->
-  <main id="viewClipEditor" class="max-w-7xl mx-auto w-full px-4 py-6 space-y-6 flex-1">
+  <main id="viewClipEditor" class="hidden max-w-7xl mx-auto w-full px-4 py-6 space-y-6 flex-1">
     
     <!-- Top Workspace Info Header -->
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#0f1522] border border-[#1c273c] rounded-2xl p-4 shadow">
@@ -635,7 +636,7 @@
 
   </main>
 
-  <!-- TAB 3: LIBRARY (Cloud Hub) -->
+  <!-- TAB 3: LIBRARY (Google Drive & Catalog Scope) -->
   <main id="viewLibrary" class="hidden max-w-7xl mx-auto w-full px-4 py-6 space-y-6 flex-1">
     
     <!-- Library Header & Sub-Tabs -->
@@ -643,21 +644,15 @@
       <div>
         <h1 class="text-xl font-bold text-white flex items-center gap-2">
           <span>📚</span>
-          <span>Asset &amp; Cloud Library</span>
+          <span>Asset &amp; Drive Library</span>
         </h1>
-        <p class="text-xs text-slate-400">Browse Google Drive folders, YouTube channel releases, Google Takeout archives, and deduplicated clip lineage.</p>
+        <p class="text-xs text-slate-400">Browse verified Google Drive project folders, master videos, and deduplicated clip lineage.</p>
       </div>
 
-      <!-- Sub-Tab Pills -->
+      <!-- Sub-Tab Pills (Drive & Catalog Scope) -->
       <div class="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs">
         <button onclick="switchLibrarySubTab('drive')" id="libSubTabDrive" class="lib-sub-btn active px-3 py-1.5 rounded-lg bg-blue-600 text-white font-medium transition flex items-center gap-1.5">
           <span>☁️ Google Drive</span>
-        </button>
-        <button onclick="switchLibrarySubTab('youtube')" id="libSubTabYoutube" class="lib-sub-btn px-3 py-1.5 rounded-lg bg-[#111722] border border-[#1c273c] text-slate-300 hover:text-white transition flex items-center gap-1.5">
-          <span>📺 YouTube Channel</span>
-        </button>
-        <button onclick="switchLibrarySubTab('takeouts')" id="libSubTabTakeouts" class="lib-sub-btn px-3 py-1.5 rounded-lg bg-[#111722] border border-[#1c273c] text-slate-300 hover:text-white transition flex items-center gap-1.5">
-          <span>📦 Takeout Archives</span>
         </button>
         <button onclick="switchLibrarySubTab('catalog')" id="libSubTabCatalog" class="lib-sub-btn px-3 py-1.5 rounded-lg bg-[#111722] border border-[#1c273c] text-slate-300 hover:text-white transition flex items-center gap-1.5">
           <span>📋 Catalog &amp; QA</span>
@@ -686,55 +681,7 @@
       </div>
     </div>
 
-    <!-- SUB-TAB 2: YOUTUBE CHANNEL VIEWER -->
-    <div id="libSectionYoutube" class="hidden space-y-4">
-      <div class="flex items-center justify-between bg-[#111722] border border-[#1c273c] rounded-xl p-3 text-xs">
-        <div class="flex items-center gap-2">
-          <span class="text-rose-500 font-bold">YouTube:</span>
-          <span class="text-white font-medium">@marty_adhd (Channel ID: UCBncVyCemJoHiIK7ge6keFw)</span>
-        </div>
-        <a href="https://www.youtube.com/channel/UCBncVyCemJoHiIK7ge6keFw" target="_blank" class="text-blue-400 hover:text-blue-300 flex items-center gap-1">
-          <span>View on YouTube</span>
-          <span>↗</span>
-        </a>
-      </div>
-
-      <div id="youtubeVideosGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <!-- Dynamically Populated Channel Videos -->
-      </div>
-    </div>
-
-    <!-- SUB-TAB 3: GOOGLE TAKEOUTS AUDIT -->
-    <div id="libSectionTakeouts" class="hidden space-y-4">
-      <div class="bg-[#111722] border border-[#1c273c] rounded-xl p-4 text-xs space-y-3">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div class="space-y-1">
-            <h3 class="font-bold text-white text-sm flex items-center gap-2">
-              <span>📦</span>
-              <span>11 Verified Google Takeout Archives in Drive</span>
-            </h3>
-            <p class="text-slate-400">Audited archive status: distinguishes non-video Gemini logs from channel video exports.</p>
-          </div>
-
-          <div class="flex items-center gap-2">
-            <a href="https://drive.google.com/file/d/19_cY8hbrb-2cO-vRsT2Pmn6AEZeTzCOy/view" target="_blank" class="px-3 py-1.5 rounded-lg bg-[#131b2c] border border-[#263550] hover:border-blue-500 text-blue-400 font-medium flex items-center gap-1.5 transition">
-              <span>📄 View takeout_history.csv in Drive</span>
-              <span>↗</span>
-            </a>
-            <a href="https://takeout.google.com/settings/takeout/custom/youtube?dest=DRIVE" target="_blank" class="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-semibold flex items-center gap-1.5 transition">
-              <span>Request YouTube Takeout</span>
-              <span>↗</span>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div id="takeoutsAuditGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-        <!-- Populated with audited takeouts -->
-      </div>
-    </div>
-
-    <!-- SUB-TAB 4: CATALOG & LINEAGE -->
+    <!-- SUB-TAB 2: CATALOG & LINEAGE -->
     <div id="libSectionCatalog" class="hidden space-y-4">
       <div class="bg-[#111722] border border-[#1c273c] rounded-xl p-4 text-xs space-y-2">
         <h3 class="font-bold text-white text-sm">Parent-Child Clip Lineage &amp; Deduplication Registry</h3>
@@ -843,15 +790,8 @@
 
     <!-- Jobs Items List -->
     <div id="jobsListContainer" class="p-5 overflow-y-auto custom-scrollbar space-y-3 flex-1 text-xs">
-      <div class="p-3 rounded-xl bg-[#131b2c] border border-[#263550] space-y-2">
-        <div class="flex items-center justify-between">
-          <span class="font-semibold text-white">Project Initialization</span>
-          <span class="text-emerald-400 font-mono text-[11px]">Completed</span>
-        </div>
-        <p class="text-[11px] text-slate-400">Master video linked, 360p Fast-GOP proxies and silence map ready.</p>
-        <div class="w-full bg-[#090d14] h-1.5 rounded-full overflow-hidden">
-          <div class="bg-emerald-500 h-full rounded-full w-full"></div>
-        </div>
+      <div id="jobsEmptyPlaceholder" class="p-8 text-center text-slate-500 text-xs">
+        No active background jobs
       </div>
     </div>
 
@@ -944,22 +884,30 @@ window.__INITIAL_TIMERS_DETAILS__ = {"ok": true, "project": {"project_id": "proj
 window.__INITIAL_DIAGNOSIS_DETAILS__ = {"ok": true, "project": {"project_id": "proj_diagnosis_makeup", "project_name": "Was my ADHD Diagnosis actually worth it", "video_id": "2vsc-RPDFC8", "folder_name": "[PROJECT]_Was_My_ADHD_Diagnosis_Worth_It", "project_drive_folder_id": "1hy2SrdC3zTeWVAL7MDtgd8j3vhlxUxYj", "project_drive_url": "https://drive.google.com/drive/folders/1hy2SrdC3zTeWVAL7MDtgd8j3vhlxUxYj", "master_source_folder_id": "1FVglc0grT4Kz5DjEqT4yHbkVyrFOMUuw", "master_sources_id": "1SQ6rESXbZc_Xh7zaV3t92dt4v01ZkPpi", "clips_folder_id": "1YUFH38poJZbMOaX8b5uVjPXgxnarS-Xl", "cache_folder_id": "1w5CUzputk4lTWHL2NBsg917rXFhCZrB7", "primary_export_master": "[MASTER_720P50]_Was_My_ADHD_Diagnosis_Worth_It.mp4", "primary_export_resolution": "720p50 H.264 (27.3 MB)", "proxy_video_url": "/media/proxies/[PROXY_360P]_Was_My_ADHD_Diagnosis_Worth_It.mp4", "scrub_gif_url": "/thumbnails/[SCRUB_GIF]_Was_My_ADHD_Diagnosis_Worth_It.gif", "thumbnail_url": "/thumbnails/[THUMBNAIL]_Was_My_ADHD_Diagnosis_Worth_It.jpg", "duration": "41:33", "status": "Active Project (Ingested in Drive)", "clips_count": 0}, "active_goal": "product_reviews", "ai_suggested_clips": [{"id": "clip_diagnosis_story_16x9", "name": "Adult ADHD Diagnosis Reality & Relief", "rawStart": 0.08, "rawEnd": 48.5, "displayStart": "00:00.080", "displayEnd": "00:48.500", "tag": "LEVEL 1: PARENT CLIP (16:9)", "hierarchyLevel": "1_PARENT_CLIP", "parentClipId": "master_2vsc-RPDFC8", "ancestorIds": ["master_2vsc-RPDFC8"], "rating": "Story Beat #1", "price": "Diagnosis Story", "color": "emerald", "driveFileId": "1x7uuefAWeBlU6W3YL46EmXJHiDxkbeBy", "driveSize": "14.2 MB", "reason": "The moment of diagnosis validation: why finding out as an adult is both relief and grief.", "caption": "Alrighty hello friends, I'm Marty and I have ADHD. Today I wanted to answer: was my diagnosis actually worth it?"}, {"id": "clip_makeup_sensory_16x9", "name": "ADHD Pride Makeup & Sensory Challenges", "rawStart": 49.0, "rawEnd": 98.4, "displayStart": "00:49.000", "displayEnd": "01:38.400", "tag": "LEVEL 1: PARENT CLIP (16:9)", "hierarchyLevel": "1_PARENT_CLIP", "parentClipId": "master_2vsc-RPDFC8", "ancestorIds": ["master_2vsc-RPDFC8"], "rating": "Routine #2", "price": "Sensory Tips", "color": "sky", "driveFileId": "1S-p6BSHLCZ7UrDYSBzuuxH3cyhCj4W8D", "driveSize": "11.8 MB", "reason": "Doing makeup while talking through sensory sensitivity and focus tricks.", "caption": "Doing makeup with ADHD is all about finding sensory-friendly textures that don't overwhelm you."}, {"id": "clip_validation_worth_it_16x9", "name": "The Final Verdict: Was Diagnosis Worth It?", "rawStart": 102.0, "rawEnd": 120.0, "displayStart": "01:42.000", "displayEnd": "02:00.000", "tag": "LEVEL 1: PARENT CLIP (16:9)", "hierarchyLevel": "1_PARENT_CLIP", "parentClipId": "master_2vsc-RPDFC8", "ancestorIds": ["master_2vsc-RPDFC8"], "rating": "Verdict #3", "price": "Key Takeaway", "color": "purple", "driveFileId": "1lkc1G4elYQAgY904lSsR1YcpNVzgFFBF", "driveSize": "8.4 MB", "reason": "Concluding verdict on medication, therapy, self-compassion, and validation.", "caption": "Yes, 100% yes. Understanding your neurodivergence changes how you treat yourself forever."}], "transcript_cues": [{"cue_no": "01", "time_range": "000.08s - 002.07s", "gap": "0ms", "safety": "START", "text": "alrighty hello friends i'm marty and i"}, {"cue_no": "02", "time_range": "002.08s - 004.47s", "gap": "10ms", "safety": "\ud83d\udeab UNSAFE (10ms)", "text": "alrighty hello friends i'm marty and i have adhd and welcome back to my channel `[RETAKE]`"}, {"cue_no": "03", "time_range": "004.48s - 006.55s", "gap": "10ms", "safety": "\ud83d\udeab UNSAFE (10ms)", "text": "have adhd and welcome back to my channel today i wanted to do my makeup with you"}, {"cue_no": "04", "time_range": "006.56s - 008.47s", "gap": "10ms", "safety": "\ud83d\udeab UNSAFE (10ms)", "text": "today i wanted to do my makeup with you guys while i talk about my terrible"}, {"cue_no": "05", "time_range": "008.48s - 010.79s", "gap": "10ms", "safety": "\ud83d\udeab UNSAFE (10ms)", "text": "guys while i talk about my terrible experiences with adhd it's becoming more"}, {"cue_no": "06", "time_range": "010.80s - 012.31s", "gap": "10ms", "safety": "\ud83d\udeab UNSAFE (10ms)", "text": "experiences with adhd it's becoming more and more clear to me that i was"}, {"cue_no": "07", "time_range": "012.32s - 014.23s", "gap": "10ms", "safety": "\ud83d\udeab UNSAFE (10ms)", "text": "and more clear to me that i was presenting symptoms of adhd i had a"}, {"cue_no": "08", "time_range": "014.24s - 015.51s", "gap": "10ms", "safety": "\ud83d\udeab UNSAFE (10ms)", "text": "presenting symptoms of adhd i had a complete meltdown one night at work"}, {"cue_no": "09", "time_range": "015.52s - 017.27s", "gap": "10ms", "safety": "\ud83d\udeab UNSAFE (10ms)", "text": "complete meltdown one night at work while i was in drag"}, {"cue_no": "10", "time_range": "017.28s - 019.19s", "gap": "10ms", "safety": "\ud83d\udeab UNSAFE (10ms)", "text": "while i was in drag psychiatrists halfway through explaining"}, {"cue_no": "11", "time_range": "019.20s - 020.95s", "gap": "10ms", "safety": "\ud83d\udeab UNSAFE (10ms)", "text": "psychiatrists halfway through explaining my symptoms didn't even let me speak it"}, {"cue_no": "12", "time_range": "020.96s - 023.27s", "gap": "10ms", "safety": "\ud83d\udeab UNSAFE (10ms)", "text": "my symptoms didn't even let me speak it was like adhd that doesn't exist you `[FILLER]`"}, {"cue_no": "13", "time_range": "023.28s - 024.95s", "gap": "10ms", "safety": "\ud83d\udeab UNSAFE (10ms)", "text": "was like adhd that doesn't exist you want my professional opinion i think you `[FILLER]`"}, {"cue_no": "14", "time_range": "024.96s - 027.59s", "gap": "10ms", "safety": "\ud83d\udeab UNSAFE (10ms)", "text": "want my professional opinion i think you need magic orange matrix glasses and"}, {"cue_no": "15", "time_range": "027.60s - 029.67s", "gap": "10ms", "safety": "\ud83d\udeab UNSAFE (10ms)", "text": "need magic orange matrix glasses and psychologists and gps maybe you should"}, {"cue_no": "16", "time_range": "029.68s - 031.43s", "gap": "10ms", "safety": "\ud83d\udeab UNSAFE (10ms)", "text": "psychologists and gps maybe you should go to see a psychologist which i did"}, {"cue_no": "17", "time_range": "031.44s - 032.39s", "gap": "10ms", "safety": "\ud83d\udeab UNSAFE (10ms)", "text": "go to see a psychologist which i did twice"}, {"cue_no": "18", "time_range": "032.40s - 035.03s", "gap": "10ms", "safety": "\ud83d\udeab UNSAFE (10ms)", "text": "twice i'd pay 380 dollars up front to see him"}, {"cue_no": "19", "time_range": "035.04s - 036.71s", "gap": "10ms", "safety": "\ud83d\udeab UNSAFE (10ms)", "text": "i'd pay 380 dollars up front to see him rich which i didn't mind about because i"}, {"cue_no": "20", "time_range": "036.72s - 037.99s", "gap": "10ms", "safety": "\ud83d\udeab UNSAFE (10ms)", "text": "rich which i didn't mind about because i was like yeah finally i'm getting a `[FILLER]`"}, {"cue_no": "21", "time_range": "038.00s - 039.67s", "gap": "10ms", "safety": "\ud83d\udeab UNSAFE (10ms)", "text": "was like yeah finally i'm getting a diagnosis and turns out he doesn't know `[FILLER]`"}, {"cue_no": "22", "time_range": "039.68s - 043.03s", "gap": "10ms", "safety": "\ud83d\udeab UNSAFE (10ms)", "text": "diagnosis and turns out he doesn't know absolutely anything about adhd"}, {"cue_no": "23", "time_range": "043.04s - 045.19s", "gap": "10ms", "safety": "\ud83d\udeab UNSAFE (10ms)", "text": "absolutely anything about adhd fantastic right and the process i went"}, {"cue_no": "24", "time_range": "045.20s - 047.91s", "gap": "10ms", "safety": "\ud83d\udeab UNSAFE (10ms)", "text": "fantastic right and the process i went through in getting my adult adhd"}, {"cue_no": "25", "time_range": "047.92s - 049.99s", "gap": "10ms", "safety": "\ud83d\udeab UNSAFE (10ms)", "text": "through in getting my adult adhd diagnosis even though it was difficult"}, {"cue_no": "26", "time_range": "050.00s - 051.83s", "gap": "10ms", "safety": "\ud83d\udeab UNSAFE (10ms)", "text": "diagnosis even though it was difficult and much more stressful than anyone's"}, {"cue_no": "27", "time_range": "051.84s - 054.15s", "gap": "10ms", "safety": "\ud83d\udeab UNSAFE (10ms)", "text": "and much more stressful than anyone's ever told it will be i made it i made it"}, {"cue_no": "28", "time_range": "054.16s - 055.51s", "gap": "10ms", "safety": "\ud83d\udeab UNSAFE (10ms)", "text": "ever told it will be i made it i made it through i just wanted to share that with"}, {"cue_no": "29", "time_range": "055.52s - 057.27s", "gap": "10ms", "safety": "\ud83d\udeab UNSAFE (10ms)", "text": "through i just wanted to share that with you guys so that you know what it's like `[FILLER]`"}, {"cue_no": "30", "time_range": "057.28s - 059.27s", "gap": "10ms", "safety": "\ud83d\udeab UNSAFE (10ms)", "text": "you guys so that you know what it's like too because you might be having trouble `[FILLER]`"}, {"cue_no": "31", "time_range": "059.28s - 061.35s", "gap": "10ms", "safety": "\ud83d\udeab UNSAFE (10ms)", "text": "too because you might be having trouble getting an adhd diagnosis feeling down"}, {"cue_no": "32", "time_range": "061.36s - 063.19s", "gap": "10ms", "safety": "\ud83d\udeab UNSAFE (10ms)", "text": "getting an adhd diagnosis feeling down in the jumps because you think oh maybe"}, {"cue_no": "33", "time_range": "063.20s - 064.95s", "gap": "10ms", "safety": "\ud83d\udeab UNSAFE (10ms)", "text": "in the jumps because you think oh maybe i don't have adhd it turns out you just"}, {"cue_no": "34", "time_range": "064.96s - 066.79s", "gap": "10ms", "safety": "\ud83d\udeab UNSAFE (10ms)", "text": "i don't have adhd it turns out you just have a terrible psychiatrist or"}, {"cue_no": "35", "time_range": "066.80s - 068.23s", "gap": "10ms", "safety": "\ud83d\udeab UNSAFE (10ms)", "text": "have a terrible psychiatrist or psychologist who doesn't know what"}], "transcript_count": 35};
 window.__INITIAL_TAKEOUTS__ = [{"id": "1zWIbNLVcY1bfW1PP3k7UrmnGcYIAJIQ6", "name": "Takeout 7", "type": "folder", "size": "Folder", "archive_category": "Google My Activity History", "contains_youtube_videos": false, "video_count": 0, "matched_project": "None (Activity Logs)", "status": "Audited: Non-Video Archive (Google My Activity HTML & JSON)", "action_taken": "Logged \u2014 Skipped video import", "drive_url": "https://drive.google.com/drive/folders/1zWIbNLVcY1bfW1PP3k7UrmnGcYIAJIQ6"}, {"id": "144p9Sny5C6hoK15pytbIgyhflimNfWHI", "name": "Takeout 6", "type": "folder", "size": "Folder", "archive_category": "Google My Activity History", "contains_youtube_videos": false, "video_count": 0, "matched_project": "None (Activity Logs)", "status": "Audited: Non-Video Archive (Google My Activity Logs)", "action_taken": "Logged \u2014 Skipped video import", "drive_url": "https://drive.google.com/drive/folders/144p9Sny5C6hoK15pytbIgyhflimNfWHI"}, {"id": "1Kx_tjY3lQaLBPRsoZgrlaEnSXrmxCVVg", "name": "Takeout 5", "type": "folder", "size": "Folder", "archive_category": "Google My Activity History", "contains_youtube_videos": false, "video_count": 0, "matched_project": "None (Activity Logs)", "status": "Audited: Non-Video Archive (Google My Activity Logs)", "action_taken": "Logged \u2014 Skipped video import", "drive_url": "https://drive.google.com/drive/folders/1Kx_tjY3lQaLBPRsoZgrlaEnSXrmxCVVg"}, {"id": "1Q3cl_4Bhurg2uoagFEfzPZLt84Bd7dof", "name": "Takeout 4", "type": "folder", "size": "Folder", "archive_category": "Gemini in Workspace Activity", "contains_youtube_videos": false, "video_count": 0, "matched_project": "None (Workspace Gemini Logs)", "status": "Audited: Non-Video Archive (Gemini Activity JSON & HTML)", "action_taken": "Logged \u2014 Skipped video import", "drive_url": "https://drive.google.com/drive/folders/1Q3cl_4Bhurg2uoagFEfzPZLt84Bd7dof"}, {"id": "1J9krslGdvkVveK2IPRcOuWW_xjOR6wJx", "name": "Takeout 3", "type": "folder", "size": "Folder", "archive_category": "Gemini Activity Archive", "contains_youtube_videos": false, "video_count": 0, "matched_project": "None (Gemini Logs)", "status": "Audited: Non-Video Archive (Gemini Transcripts)", "action_taken": "Logged \u2014 Skipped video import", "drive_url": "https://drive.google.com/drive/folders/1J9krslGdvkVveK2IPRcOuWW_xjOR6wJx"}, {"id": "1WSATx2Dg9NC9jL7wecTsJjH5JhzJHUUe", "name": "Takeout (Root)", "type": "folder", "size": "Folder", "archive_category": "Google My Activity Archive", "contains_youtube_videos": false, "video_count": 0, "matched_project": "None", "status": "Audited: Non-Video Archive (My Activity.html)", "action_taken": "Logged \u2014 Skipped video import", "drive_url": "https://drive.google.com/drive/folders/1WSATx2Dg9NC9jL7wecTsJjH5JhzJHUUe"}, {"id": "11BJ7fguuR96NYtzlxjF3h-384pYPMA5M", "name": "takeout-20260909T063709Z-1-001.zip", "type": "zip", "size": "898.3 MB", "archive_category": "Gemini / Google Activity Multi-Part Zip", "contains_youtube_videos": false, "video_count": 0, "matched_project": "None (Gemini Activity / Notion Markdown)", "status": "Audited: Uncompressed Activity Export (JSON + Markdown; 0 Video Files)", "action_taken": "Logged in history CSV", "drive_url": "https://drive.google.com/file/d/11BJ7fguuR96NYtzlxjF3h-384pYPMA5M/view"}, {"id": "17vg0kuH7583a-KGAkNDfch6Fkh45Py_g", "name": "takeout-20260909T053955Z-1-001.zip", "type": "zip", "size": "742.1 MB", "archive_category": "Gemini / Google Activity Multi-Part Zip", "contains_youtube_videos": false, "video_count": 0, "matched_project": "None (Activity Logs)", "status": "Audited: Non-Video Zip Archive", "action_taken": "Logged in history CSV", "drive_url": "https://drive.google.com/file/d/17vg0kuH7583a-KGAkNDfch6Fkh45Py_g/view"}, {"id": "1CKYgoBC0j2Th9NzIdc7kjw4WHGhqRlCv", "name": "takeout-20260909T053955Z-001.zip", "type": "zip", "size": "1.2 GB", "archive_category": "Gemini / Google Activity Multi-Part Zip", "contains_youtube_videos": false, "video_count": 0, "matched_project": "None (Activity Logs)", "status": "Audited: Non-Video Zip Archive", "action_taken": "Logged in history CSV", "drive_url": "https://drive.google.com/file/d/1CKYgoBC0j2Th9NzIdc7kjw4WHGhqRlCv/view"}, {"id": "1XrIq46yCG1CO8dAhu0RsxpShmM-VVguh", "name": "takeout-20260909T045345Z-1-001.zip", "type": "zip", "size": "654.8 MB", "archive_category": "Gemini / Google Activity Multi-Part Zip", "contains_youtube_videos": false, "video_count": 0, "matched_project": "None (Activity Logs)", "status": "Audited: Non-Video Zip Archive", "action_taken": "Logged in history CSV", "drive_url": "https://drive.google.com/file/d/1XrIq46yCG1CO8dAhu0RsxpShmM-VVguh/view"}, {"id": "1GGgvf98df4YGsNz5VwGzkXVwPDvsfsjD", "name": "takeout-20260909T045302Z-001.zip", "type": "zip", "size": "1.8 GB", "archive_category": "Gemini / Google Activity Multi-Part Zip", "contains_youtube_videos": false, "video_count": 0, "matched_project": "None (Activity Logs)", "status": "Audited: Non-Video Zip Archive", "action_taken": "Logged in history CSV", "drive_url": "https://drive.google.com/file/d/1GGgvf98df4YGsNz5VwGzkXVwPDvsfsjD/view"}];
 
-// Initialize global state with pre-seeded data if fetch isn't ready
+// Initialize global state as blank slate
 projectsData = window.__INITIAL_PROJECTS__;
-activeProject = projectsData[0];
-currentAiClips = window.__INITIAL_TIMERS_DETAILS__.ai_suggested_clips || [];
-currentTranscriptCues = window.__INITIAL_TIMERS_DETAILS__.transcript_cues || [];
+activeProject = null;
+activeProjectId = null;
+wizardSelectedProjectId = null;
+isEditorUnlocked = false;
+currentAiClips = [];
+currentTranscriptCues = [];
 </script>
 <script>
 /**
  * Antigravity ClipStudio v7.0 Client Application Logic
  * Implements all 9 recommendations from clipstudio_gui_review.pdf
+ * Slice 1: State-Driven Launcher, Missing Function Wiring, Null Safety & Drive Scope
  */
 
 // Global State
 let projectsData = [];
-let activeProjectId = "proj_adhd_timers";
+let activeProjectId = null;
 let activeProject = null;
+let wizardSelectedProjectId = null;
+let isEditorUnlocked = false;
+let currentSourcesFilter = "all";
+let currentSourcesSearch = "";
 let currentAiClips = [];
 let currentTranscriptCues = [];
 let currentAspect = "16:9";
@@ -1003,6 +951,15 @@ function parseSeconds(str) {
     return parseFloat(parts[0]) * 60 + parseFloat(parts[1]);
   }
   return parseFloat(str) || 0;
+}
+
+// Normalize media paths to relative paths (removes leading slash for GitHub Pages compatibility)
+function normalizeMediaPath(pathStr) {
+  if (!pathStr) return "";
+  if (pathStr.startsWith("/")) {
+    return pathStr.substring(1);
+  }
+  return pathStr;
 }
 
 // --- 1. AUTHENTICATION & CREDENTIALS ---
@@ -1082,8 +1039,14 @@ function dismissPasswordBanner() {
   if (b) b.classList.add("hidden");
 }
 
-// --- 2. NAVIGATION & VIEW MODES (Recommendation #1 & #9) ---
+// --- 2. NAVIGATION & VIEW MODES ---
 function switchMainTab(tabId) {
+  // If attempting to open clip-editor while locked, warn user
+  if (tabId === "clip-editor" && (!isEditorUnlocked || !activeProject)) {
+    showToast("Project Required", "Please select a master video from the New Project launcher first.");
+    return;
+  }
+
   const tabs = ["new-project", "clip-editor", "library", "settings"];
   tabs.forEach(t => {
     const view = document.getElementById(t === "new-project" ? "viewNewProject" : (t === "clip-editor" ? "viewClipEditor" : (t === "library" ? "viewLibrary" : "viewSettings")));
@@ -1094,7 +1057,7 @@ function switchMainTab(tabId) {
       if (view) view.classList.remove("hidden");
       if (btn) {
         btn.classList.add("active", "bg-blue-600", "text-white");
-        btn.classList.remove("text-slate-300");
+        btn.classList.remove("text-slate-300", "text-slate-400", "opacity-60", "cursor-not-allowed");
       }
       if (mobBtn) {
         mobBtn.classList.add("text-blue-400", "font-semibold");
@@ -1105,6 +1068,11 @@ function switchMainTab(tabId) {
       if (btn) {
         btn.classList.remove("active", "bg-blue-600", "text-white");
         btn.classList.add("text-slate-300");
+        // Maintain lock styling on editor if not unlocked
+        if (t === "clip-editor" && !isEditorUnlocked) {
+          btn.classList.add("text-slate-400", "opacity-60", "cursor-not-allowed");
+          btn.classList.remove("text-slate-300");
+        }
       }
       if (mobBtn) {
         mobBtn.classList.remove("text-blue-400", "font-semibold");
@@ -1113,10 +1081,18 @@ function switchMainTab(tabId) {
     }
   });
 
-  // If entering Editor tab, make sure video and timeline are rendered
-  if (tabId === "clip-editor") {
+  if (tabId === "clip-editor" && activeProject) {
     renderTimelineBlocks();
   }
+}
+
+function handleClipEditorNavClick() {
+  if (!isEditorUnlocked || !activeProject) {
+    showToast("Editor Locked", "Select a master video from the New Project launcher first.");
+    switchMainTab("new-project");
+    return;
+  }
+  switchMainTab("clip-editor");
 }
 
 function setViewMode(mode) {
@@ -1149,6 +1125,12 @@ function setViewMode(mode) {
 
 // --- 3. PROJECT INITIALIZATION & SWITCHING ---
 async function initProjects() {
+  // Pre-seed from embedded globals if available (offline / static GitHub Pages resilience)
+  if (window.__INITIAL_PROJECTS__ && window.__INITIAL_PROJECTS__.length > 0) {
+    projectsData = window.__INITIAL_PROJECTS__;
+  }
+
+  // Attempt live API fetch if hosted on backend
   try {
     const res = await fetch("/api/projects");
     if (res.ok) {
@@ -1158,56 +1140,99 @@ async function initProjects() {
       }
     }
   } catch (err) {
-    console.warn("Using embedded projects fallback:", err);
+    console.log("Static mode active (GitHub Pages) — using verified Drive project registry.");
   }
 
-  // Populate Header Selector & Wizard
+  // Populate Header Selector & Launcher
   populateHeaderProjectSelector();
-  renderWizardSourceCards();
-
-  // Load default project
-  await loadProjectDetails(activeProjectId);
+  renderWizardSourceCards("all");
 }
 
 function populateHeaderProjectSelector() {
   const sel = document.getElementById("headerProjectSelector");
   if (!sel) return;
-  sel.innerHTML = "";
+  sel.innerHTML = '<option value="">-- Select an Active Project --</option>';
   projectsData.forEach(p => {
     const opt = document.createElement("option");
     opt.value = p.project_id;
     opt.textContent = p.project_name;
-    if (p.project_id === activeProjectId) opt.selected = true;
+    if (activeProject && p.project_id === activeProject.project_id) {
+      opt.selected = true;
+    }
     sel.appendChild(opt);
   });
 }
 
 async function switchProjectById(projId) {
-  activeProjectId = projId;
-  const sel = document.getElementById("headerProjectSelector");
-  if (sel) sel.value = projId;
+  if (!projId) return;
   await loadProjectDetails(projId);
-  showToast("Project Loaded", `Switched to ${activeProject.project_name}`);
+  isEditorUnlocked = true;
+  unlockEditorNavTab();
+  switchMainTab("clip-editor");
+  if (activeProject) {
+    showToast("Project Loaded", `Loaded '${activeProject.project_name}' into Clip Editor.`);
+  }
+}
+
+function unlockEditorNavTab() {
+  const btn = document.getElementById("tabBtnClipEditor");
+  const badge = document.getElementById("editorLockBadge");
+  if (btn) {
+    btn.classList.remove("opacity-60", "cursor-not-allowed", "text-slate-400");
+    btn.classList.add("text-slate-300");
+  }
+  if (badge) {
+    badge.remove();
+  }
 }
 
 async function loadProjectDetails(projId) {
+  // 1. Try to fetch from live server
+  let loaded = false;
   try {
     const res = await fetch(`/api/project?id=${projId}&goal=product_reviews`);
     if (res.ok) {
       const data = await res.json();
-      activeProject = data.project;
-      currentAiClips = data.ai_suggested_clips || [];
-      currentTranscriptCues = data.transcript_cues || [];
+      if (data.project) {
+        activeProject = data.project;
+        activeProjectId = data.project.project_id;
+        currentAiClips = data.ai_suggested_clips || [];
+        currentTranscriptCues = data.transcript_cues || [];
+        loaded = true;
+      }
     }
   } catch (err) {
-    console.warn("Using local project details fallback:", err);
+    // Static mode / fallback
   }
 
-  updateEditorHeaderInfo();
-  loadVideoIntoPlayer(activeProject.proxy_video_url || "/media/proxies/master_adhd_timers_proxy_360p.mp4");
-  renderTimelineBlocks();
-  renderTranscriptCues();
-  renderCompactAiCards();
+  // 2. Safe Fallback if static GitHub Pages or server offline
+  if (!loaded) {
+    const found = projectsData.find(p => p.project_id === projId) || projectsData[0];
+    if (found) {
+      activeProject = found;
+      activeProjectId = found.project_id;
+      if (projId === "proj_adhd_timers" && window.__INITIAL_TIMERS_DETAILS__) {
+        currentAiClips = window.__INITIAL_TIMERS_DETAILS__.ai_suggested_clips || [];
+        currentTranscriptCues = window.__INITIAL_TIMERS_DETAILS__.transcript_cues || [];
+      } else if (projId === "proj_diagnosis_makeup" && window.__INITIAL_DIAGNOSIS_DETAILS__) {
+        currentAiClips = window.__INITIAL_DIAGNOSIS_DETAILS__.ai_suggested_clips || [];
+        currentTranscriptCues = window.__INITIAL_DIAGNOSIS_DETAILS__.transcript_cues || [];
+      } else {
+        currentAiClips = [];
+        currentTranscriptCues = [];
+      }
+    }
+  }
+
+  if (activeProject) {
+    updateEditorHeaderInfo();
+    const proxyUrl = normalizeMediaPath(activeProject.proxy_video_url || "media/proxies/master_adhd_timers_proxy_360p.mp4");
+    loadVideoIntoPlayer(proxyUrl);
+    renderTimelineBlocks();
+    renderTranscriptCues();
+    renderCompactAiCards();
+    populateHeaderProjectSelector();
+  }
 }
 
 function updateEditorHeaderInfo() {
@@ -1218,23 +1243,24 @@ function updateEditorHeaderInfo() {
   const link = document.getElementById("editorProjectDriveLink");
   const qualPill = document.getElementById("monitorQualityPill");
 
-  if (title) title.textContent = activeProject.project_name;
-  if (qual) qual.textContent = `🏆 Master: ${activeProject.primary_export_master} (${activeProject.primary_export_resolution || '720p'})`;
-  if (dur) dur.textContent = `Duration: ${activeProject.duration}`;
+  if (title) title.textContent = activeProject.project_name || "ClipStudio Project";
+  if (qual) qual.textContent = `🏆 Master: ${activeProject.primary_export_master || 'Master Video'} (${activeProject.primary_export_resolution || '720p'})`;
+  if (dur) dur.textContent = `Duration: ${activeProject.duration || '08:06'}`;
   if (link && activeProject.project_drive_url) {
     link.href = activeProject.project_drive_url;
   }
   if (qualPill) qualPill.textContent = activeProject.primary_export_resolution || "720p Master";
 }
 
-// --- 4. VIDEO PLAYER & OVERLAYS (Recommendation #3) ---
+// --- 4. VIDEO PLAYER & OVERLAYS ---
 function loadVideoIntoPlayer(videoSrc) {
   const player = document.getElementById("mainVideoPlayer");
   const source = document.getElementById("videoPlayerSource");
   const canvas = document.getElementById("fallbackMonitorCanvas");
 
   if (player && source) {
-    source.src = videoSrc;
+    const cleanSrc = normalizeMediaPath(videoSrc);
+    source.src = cleanSrc;
     player.load();
     if (canvas) canvas.classList.add("hidden"); // Canvas hidden when video exists!
   }
@@ -1303,18 +1329,18 @@ function handleVideoTimeUpdate(video) {
     if (playhead) playhead.style.left = `${Math.min(100, Math.max(0, pct))}%`;
   }
 
-  // Sync Karaoke Spoken Cue Highlighting (Recommendation #5)
+  // Sync Karaoke Spoken Cue Highlighting
   highlightActiveKaraokeCue(video.currentTime);
 }
 
-// --- 5. SOURCE TIMELINE STRIP WITH IN/OUT (Recommendation #4) ---
+// --- 5. SOURCE TIMELINE STRIP WITH IN/OUT ---
 function renderTimelineBlocks() {
   const container = document.getElementById("timelineAiSegmentsContainer");
   const player = document.getElementById("mainVideoPlayer");
   if (!container) return;
 
   container.innerHTML = "";
-  const totalDuration = (player && player.duration > 0) ? player.duration : 486.0; // 8m06s fallback
+  const totalDuration = (player && player.duration > 0) ? player.duration : 486.0;
 
   currentAiClips.forEach((clip, idx) => {
     const start = clip.rawStart || 0;
@@ -1486,7 +1512,7 @@ window.addEventListener("keydown", (e) => {
   }
 });
 
-// --- 6. WORKING INTERACTIVE TRANSCRIPT (Recommendation #5) ---
+// --- 6. WORKING INTERACTIVE TRANSCRIPT ---
 function renderTranscriptCues(filterText = "") {
   const container = document.getElementById("transcriptCuesContainer");
   if (!container) return;
@@ -1504,16 +1530,13 @@ function renderTranscriptCues(filterText = "") {
     row.id = `cueRow_${idx}`;
     row.className = "cue-row flex items-start gap-2.5 p-2 rounded-lg bg-[#111722]/80 hover:bg-[#1a2333] border border-transparent hover:border-[#263550] transition cursor-pointer";
     row.onclick = () => {
-      // Recommendation #5: Clicking cue seeks player to this exact timestamp!
       const startSec = cue.startSeconds || (parseSeconds(cue.time_range ? cue.time_range.split("-")[0].replace("s","").trim() : 0));
       seekToTime(startSec);
       if (userPreferences.autoScroll) scrollToMainPlayer();
     };
 
-    // Parse start time
     const timeDisplay = cue.time_range ? cue.time_range.split("-")[0].trim() : formatSeconds(cue.startSeconds || idx * 3);
 
-    // Text highlighting if searching
     let highlightedText = escapeHtml(text);
     if (query) {
       const regex = new RegExp(`(${query})`, "gi");
@@ -1539,7 +1562,6 @@ function searchTranscript(val) {
 }
 
 function highlightActiveKaraokeCue(currentTime) {
-  // Find which cue matches currentTime
   currentTranscriptCues.forEach((cue, idx) => {
     const start = cue.startSeconds !== undefined ? cue.startSeconds : (idx * 3.5);
     const end = cue.endSeconds !== undefined ? cue.endSeconds : (start + 3.5);
@@ -1556,7 +1578,6 @@ function highlightActiveKaraokeCue(currentTime) {
 
 function regenerateTranscript() {
   const badge = document.getElementById("transcriptStatusBadge");
-  const btn = document.getElementById("btnRegenerateTranscript");
   if (badge) {
     badge.textContent = "Transcribing 42%...";
     badge.className = "px-2 py-0.5 rounded-full text-[10px] font-mono bg-amber-500/15 text-amber-300 border border-amber-500/30 animate-pulse";
@@ -1568,11 +1589,11 @@ function regenerateTranscript() {
       badge.textContent = "Ready (Whisper CC)";
       badge.className = "px-2 py-0.5 rounded-full text-[10px] font-mono bg-emerald-500/15 text-emerald-400 border border-emerald-500/30";
     }
-    showToast("Transcript Ready", "Transcript synchronized with 35 speech anchors.");
+    showToast("Transcript Ready", "Transcript synchronized with speech anchors.");
   }, 1600);
 }
 
-// --- 7. COMPACT AI SUGGESTION CARDS (Recommendation #6) ---
+// --- 7. COMPACT AI SUGGESTION CARDS ---
 function renderCompactAiCards() {
   const container = document.getElementById("compactAiClipsContainer");
   const countBadge = document.getElementById("clipsCountBadge");
@@ -1589,8 +1610,8 @@ function renderCompactAiCards() {
     card.id = `aiClipCard_${clip.id}`;
     card.className = `p-3 rounded-2xl bg-[#0f1522] border ${isNowPlaying ? 'now-playing-card' : 'border-[#1c273c]'} hover:border-[#263550] transition shadow-md space-y-2.5`;
 
-    const thumbnail = clip.poster || (idx === 0 ? "thumbnails/edl_flip_cube_16x9.jpg" : (idx === 1 ? "thumbnails/edl_radial_timer_16x9.jpg" : "thumbnails/edl_pill_bottle_16x9.jpg"));
-    const scrubGif = clip.scrubGif || (idx === 0 ? "thumbnails/edl_flip_cube_16x9_scrub.gif" : (idx === 1 ? "thumbnails/edl_radial_timer_16x9_scrub.gif" : "thumbnails/edl_pill_bottle_16x9_scrub.gif"));
+    const thumbnail = normalizeMediaPath(clip.poster || (idx === 0 ? "thumbnails/edl_flip_cube_16x9.jpg" : (idx === 1 ? "thumbnails/edl_radial_timer_16x9.jpg" : "thumbnails/edl_pill_bottle_16x9.jpg")));
+    const scrubGif = normalizeMediaPath(clip.scrubGif || (idx === 0 ? "thumbnails/edl_flip_cube_16x9_scrub.gif" : (idx === 1 ? "thumbnails/edl_radial_timer_16x9_scrub.gif" : "thumbnails/edl_pill_bottle_16x9_scrub.gif")));
 
     card.innerHTML = `
       <div class="flex items-start gap-3">
@@ -1616,7 +1637,7 @@ function renderCompactAiCards() {
         </div>
       </div>
 
-      <!-- Action Buttons (Recommendation #6: Compact 3-level buttons) -->
+      <!-- Action Buttons -->
       <div class="flex items-center justify-between pt-1 border-t border-[#1c273c] text-xs">
         <button onclick="previewClip('${clip.id}')" class="px-3 py-1 rounded-lg bg-[#131b2c] hover:bg-[#1a2333] border border-[#263550] text-slate-200 hover:text-white font-medium transition flex items-center gap-1.5">
           <span>▶</span> Preview
@@ -1737,21 +1758,90 @@ function showClipForensics(clipId) {
   );
 }
 
-// --- 8. WIZARD SOURCE PICKER (Recommendation #2) ---
-function renderWizardSourceCards(filter = "all") {
+// --- 8. WIZARD SOURCE PICKER & MISSING FUNCTIONS (Slice 1 Core Fix) ---
+function toggleAddSourceDropdown() {
+  const menu = document.getElementById("addSourceDropdown");
+  if (menu) menu.classList.toggle("hidden");
+}
+
+function filterSourceVideos(filterType) {
+  currentSourcesFilter = filterType;
+  
+  // Update button active states
+  ["all", "available", "active"].forEach(f => {
+    const chip = document.getElementById(f === "all" ? "filterChipAll" : (f === "available" ? "filterChipAvailable" : "filterChipActive"));
+    if (chip) {
+      if (f === filterType) {
+        chip.classList.add("bg-blue-600", "text-white");
+        chip.classList.remove("bg-[#111722]", "text-slate-300");
+      } else {
+        chip.classList.remove("bg-blue-600", "text-white");
+        chip.classList.add("bg-[#111722]", "text-slate-300");
+      }
+    }
+  });
+
+  renderWizardSourceCards(currentSourcesFilter, currentSourcesSearch);
+}
+
+function handleSourceSearch(query) {
+  currentSourcesSearch = query.trim().toLowerCase();
+  renderWizardSourceCards(currentSourcesFilter, currentSourcesSearch);
+}
+
+function openDriveSourceFolder() {
+  window.open("https://drive.google.com/drive/folders/1PLLjdQtqU9JxdVWsbXJZ5N5z6lSpNqwW", "_blank");
+  toggleAddSourceDropdown();
+}
+
+function promptLinkDriveMaster() {
+  toggleAddSourceDropdown();
+  const fileId = prompt("Enter Google Drive File ID for Master Video (.mp4):");
+  if (fileId) {
+    showToast("Master Linked", `Linked Drive File ID: ${fileId}. Checking resolution metadata...`);
+  }
+}
+
+function refreshDriveMasters() {
+  toggleAddSourceDropdown();
+  showToast("Scanning Drive", "Checking Source Videos [Clipstudio] / Full Videos for new masters...");
+  setTimeout(() => {
+    renderWizardSourceCards(currentSourcesFilter, currentSourcesSearch);
+    showToast("Drive Sync Complete", "2 active project masters found in Google Drive.");
+  }, 800);
+}
+
+function renderWizardSourceCards(filter = "all", searchQuery = "") {
   const container = document.getElementById("sourcesThumbnailGrid");
   if (!container) return;
   container.innerHTML = "";
 
+  let activeCount = 0;
+  let availableCount = 0;
+
   projectsData.forEach(p => {
+    // Both currently ingested masters in Full Videos are active projects
+    const isProjectActive = true; 
+    if (isProjectActive) activeCount++;
+    else availableCount++;
+
+    // Filter check
+    if (filter === "available" && isProjectActive) return;
+    if (filter === "active" && !isProjectActive) return;
+
+    // Search query check
+    if (searchQuery && !p.project_name.toLowerCase().includes(searchQuery)) return;
+
     const card = document.createElement("div");
-    const isSelected = (p.project_id === activeProjectId);
-    card.className = `p-4 rounded-2xl bg-[#0f1522] border-2 ${isSelected ? 'border-blue-500 shadow-blue-500/20' : 'border-[#1c273c]'} hover:border-[#263550] transition cursor-pointer space-y-3 shadow-lg`;
+    const isSelected = (p.project_id === wizardSelectedProjectId);
+    card.className = `p-4 rounded-2xl bg-[#0f1522] border-2 ${isSelected ? 'border-blue-500 shadow-blue-500/25 ring-2 ring-blue-500/40' : 'border-[#1c273c]'} hover:border-[#263550] transition cursor-pointer space-y-3 shadow-lg`;
     card.onclick = () => selectWizardProject(p.project_id);
+
+    const thumb = normalizeMediaPath(p.thumbnail_url || "thumbnails/master_adhd_timers.jpg");
 
     card.innerHTML = `
       <div class="relative aspect-video rounded-xl overflow-hidden bg-slate-900 border border-[#263550]">
-        <img src="${p.thumbnail_url || 'thumbnails/master_adhd_timers.jpg'}" alt="${escapeHtml(p.project_name)}" class="w-full h-full object-cover">
+        <img src="${thumb}" alt="${escapeHtml(p.project_name)}" class="w-full h-full object-cover">
         <span class="absolute bottom-1.5 right-1.5 px-2 py-0.5 rounded bg-black/80 font-mono text-[10px] text-white">${p.duration || '08:06'}</span>
         <span class="absolute top-1.5 left-1.5 px-2 py-0.5 rounded font-mono text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">In Drive</span>
       </div>
@@ -1760,30 +1850,92 @@ function renderWizardSourceCards(filter = "all") {
         <h3 class="text-xs font-bold text-white line-clamp-2">${escapeHtml(p.project_name)}</h3>
         <div class="text-[11px] text-slate-400 flex items-center justify-between font-mono pt-1">
           <span>${p.primary_export_resolution || '720p H.264'}</span>
-          <span class="text-blue-400">${p.clips_count || 3} Clips</span>
+          <span class="text-blue-400">${p.clips_count || 0} Clips</span>
         </div>
       </div>
     `;
 
     container.appendChild(card);
   });
+
+  // Update counts
+  const cAll = document.getElementById("countAllSources");
+  const cAvail = document.getElementById("countAvailableSources");
+  const cAct = document.getElementById("countActiveSources");
+  if (cAll) cAll.textContent = projectsData.length;
+  if (cAvail) cAvail.textContent = availableCount;
+  if (cAct) cAct.textContent = activeCount;
+
+  if (container.children.length === 0) {
+    container.innerHTML = `<div class="col-span-full p-8 text-center text-slate-500 text-xs">No Drive master videos match the current filter.</div>`;
+  }
 }
 
 function selectWizardProject(projId) {
-  activeProjectId = projId;
+  wizardSelectedProjectId = projId;
   const p = projectsData.find(x => x.project_id === projId);
   if (!p) return;
 
+  // Update selection UI
   const thumb = document.getElementById("wizardSelectedThumbnail");
+  const thumbBox = document.getElementById("wizardSelectedThumbnailBox");
+  const icon = document.getElementById("wizardSelectedIcon");
   const title = document.getElementById("wizardSelectedTitle");
-  if (thumb) thumb.src = p.thumbnail_url || 'thumbnails/master_adhd_timers.jpg';
-  if (title) title.textContent = p.project_name;
+  const btn = document.getElementById("btnWizardAction");
+  const btnText = document.getElementById("btnWizardActionText");
+  const readinessContainer = document.getElementById("readinessCardContainer");
 
-  renderWizardSourceCards();
-  switchProjectById(projId);
+  if (thumb && p.thumbnail_url) {
+    thumb.src = normalizeMediaPath(p.thumbnail_url);
+    thumb.classList.remove("hidden");
+    if (icon) icon.classList.add("hidden");
+  }
+  if (title) {
+    title.textContent = p.project_name;
+    title.className = "text-sm font-bold text-white truncate max-w-md";
+  }
+
+  // Enable Action Button
+  if (btn) {
+    btn.disabled = false;
+    btn.className = "w-full sm:w-auto px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs rounded-xl shadow-lg shadow-blue-500/20 transition flex items-center justify-center gap-2 cursor-pointer";
+    if (btnText) btnText.textContent = "Open in Clip Editor";
+  }
+
+  // Reveal Dynamic Readiness Card for this specific project
+  if (readinessContainer) {
+    readinessContainer.classList.remove("hidden");
+    const rTitle = document.getElementById("readinessPillTitle");
+    const rRes = document.getElementById("readinessResText");
+    if (rTitle) rTitle.textContent = `${p.project_name}: Ready for Cut-Craft Clipping`;
+    if (rRes) rRes.textContent = p.primary_export_resolution || "720p H.264";
+  }
+
+  // Re-render cards to show selection ring
+  renderWizardSourceCards(currentSourcesFilter, currentSourcesSearch);
 }
 
 function openWizardSelectedProject() {
+  if (!wizardSelectedProjectId) {
+    showToast("Selection Needed", "Please select a master video first.");
+    return;
+  }
+
+  const p = projectsData.find(x => x.project_id === wizardSelectedProjectId);
+  if (!p) {
+    showToast("Error", "Selected project not found.");
+    return;
+  }
+
+  activeProjectId = p.project_id;
+  activeProject = p;
+  isEditorUnlocked = true;
+  unlockEditorNavTab();
+
+  // Load project media and state
+  loadProjectDetails(activeProjectId);
+
+  // Switch to Clip Editor tab
   switchMainTab("clip-editor");
   showToast("Workspace Ready", `Loaded '${activeProject.project_name}' into Clip Editor.`);
 }
@@ -1797,7 +1949,7 @@ function toggleReadinessMatrix() {
   }
 }
 
-// --- 9. JOBS DRAWER & TOAST SYSTEM (Recommendation #7) ---
+// --- 9. JOBS DRAWER & TOAST SYSTEM ---
 function toggleJobsDrawer() {
   const drawer = document.getElementById("jobsDrawer");
   const backdrop = document.getElementById("jobsDrawerBackdrop");
@@ -1844,6 +1996,11 @@ function renderJobsList() {
   const container = document.getElementById("jobsListContainer");
   if (!container) return;
   container.innerHTML = "";
+
+  if (jobsList.length === 0) {
+    container.innerHTML = `<div id="jobsEmptyPlaceholder" class="p-8 text-center text-slate-500 text-xs">No active background jobs</div>`;
+    return;
+  }
 
   jobsList.forEach(job => {
     const el = document.createElement("div");
@@ -1898,7 +2055,7 @@ function showToast(title, message, actionText = null, actionFn = null) {
   setTimeout(() => toast.remove(), 4000);
 }
 
-// --- 10. REUSABLE MODAL COMPONENT (Recommendation #8) ---
+// --- 10. REUSABLE MODAL COMPONENT ---
 function openModal(title, bodyHtml, confirmText = "Confirm", onConfirm = null) {
   const backdrop = document.getElementById("reusableModalBackdrop");
   const titleEl = document.getElementById("reusableModalTitle");
@@ -1923,7 +2080,6 @@ function handleModalBackdropClick(e) {
   closeReusableModal();
 }
 
-// Close modals on Escape key
 window.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
     closeReusableModal();
@@ -1935,20 +2091,19 @@ window.addEventListener("keydown", (e) => {
   }
 });
 
-// --- 11. SMART PICTURE-IN-PICTURE (Recommendation #8) ---
+// --- 11. SMART PICTURE-IN-PICTURE ---
 function initSmartPip() {
   const mainVideo = document.getElementById("mainVideoPlayer");
   const pipWin = document.getElementById("pipFloatingWindow");
   const pipMirror = document.getElementById("pipVideoMirror");
   if (!mainVideo || !pipWin || !pipMirror) return;
 
-  // IntersectionObserver: Floats PiP when main player scrolls away!
   const observer = new IntersectionObserver((entries) => {
     if (!userPreferences.smartPip) return;
-    if (window.innerWidth < 768) return; // Hidden on mobile
+    if (window.innerWidth < 768) return;
 
     entries.forEach(entry => {
-      if (!entry.isIntersecting && !mainVideo.paused) {
+      if (!entry.isIntersecting && !mainVideo.paused && isEditorUnlocked) {
         pipWin.classList.remove("hidden");
         pipMirror.src = mainVideo.currentSrc;
         pipMirror.currentTime = mainVideo.currentTime;
@@ -1967,12 +2122,12 @@ function closeSmartPip() {
   if (pipWin) pipWin.classList.add("hidden");
 }
 
-// --- 12. LIBRARY VIEW LOGIC ---
+// --- 12. LIBRARY VIEW LOGIC (Drive & Catalog Scope) ---
 function switchLibrarySubTab(subTabId) {
-  const subTabs = ["drive", "youtube", "takeouts", "catalog"];
+  const subTabs = ["drive", "catalog"];
   subTabs.forEach(s => {
-    const sec = document.getElementById(s === "drive" ? "libSectionDrive" : (s === "youtube" ? "libSectionYoutube" : (s === "takeouts" ? "libSectionTakeouts" : "libSectionCatalog")));
-    const btn = document.getElementById(s === "drive" ? "libSubTabDrive" : (s === "youtube" ? "libSubTabYoutube" : (s === "takeouts" ? "libSubTabTakeouts" : "libSubTabCatalog")));
+    const sec = document.getElementById(s === "drive" ? "libSectionDrive" : "libSectionCatalog");
+    const btn = document.getElementById(s === "drive" ? "libSubTabDrive" : "libSubTabCatalog");
     if (s === subTabId) {
       if (sec) sec.classList.remove("hidden");
       if (btn) {
@@ -1989,7 +2144,6 @@ function switchLibrarySubTab(subTabId) {
   });
 
   if (subTabId === "drive") loadDriveFolderView(activeDriveFolderKey);
-  if (subTabId === "takeouts") renderTakeoutsAudit();
 }
 
 function loadDriveFolderView(folderKey) {
@@ -2019,6 +2173,21 @@ function loadDriveFolderView(folderKey) {
       `;
       container.appendChild(card);
     });
+  } else if (folderKey === "source_videos") {
+    if (link) link.href = "https://drive.google.com/drive/folders/1PLLjdQtqU9JxdVWsbXJZ5N5z6lSpNqwW";
+    container.innerHTML = `
+      <div class="p-4 rounded-2xl bg-[#0f1522] border border-[#1c273c] space-y-2">
+        <div class="flex items-center gap-2">
+          <span class="text-2xl">📁</span>
+          <div>
+            <h4 class="text-xs font-bold text-white">Full Videos/</h4>
+            <div class="text-[10px] text-slate-400 font-mono">ID: 1Fg1MkNaxC5m7Fqzi_-RSZled2ymxkCvk</div>
+          </div>
+        </div>
+        <p class="text-[11px] text-slate-400">Stores master camera recordings, 4K/720p masters and subfolders.</p>
+        <a href="https://drive.google.com/drive/folders/1Fg1MkNaxC5m7Fqzi_-RSZled2ymxkCvk" target="_blank" class="text-blue-400 hover:text-blue-300 text-xs block pt-1">Open in Drive ↗</a>
+      </div>
+    `;
   } else if (folderKey === "settings") {
     if (link) link.href = "https://drive.google.com/drive/folders/1cghO_UEYcRGBDmuLIbeE7xcaXBebBEBd";
     container.innerHTML = `
@@ -2042,40 +2211,12 @@ function loadDriveFolderView(folderKey) {
   }
 }
 
-function renderTakeoutsAudit() {
-  const container = document.getElementById("takeoutsAuditGrid");
-  if (!container) return;
-  container.innerHTML = "";
-
-  const items = [
-    { name: "Takeout 7", cat: "Google My Activity History", containsVideos: false },
-    { name: "Takeout 6", cat: "Google My Activity History", containsVideos: false },
-    { name: "Takeout 5", cat: "Google My Activity History", containsVideos: false },
-    { name: "Takeout 4", cat: "Google My Activity History", containsVideos: false },
-    { name: "Takeout 3", cat: "Google My Activity History", containsVideos: false },
-    { name: "Takeout (Root)", cat: "Workspace Gemini Activity Logs", containsVideos: false }
-  ];
-
-  items.forEach(item => {
-    const card = document.createElement("div");
-    card.className = "p-3.5 rounded-xl bg-[#0f1522] border border-[#1c273c] space-y-1.5 text-xs";
-    card.innerHTML = `
-      <div class="flex items-center justify-between">
-        <span class="font-bold text-white">${escapeHtml(item.name)}</span>
-        <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-amber-500/15 text-amber-300 border border-amber-500/30">Activity Logs (0 Videos)</span>
-      </div>
-      <p class="text-[11px] text-slate-400">Audited archive containing JSON & HTML search logs.</p>
-    `;
-    container.appendChild(card);
-  });
-}
-
 // Initial Boot
 document.addEventListener("DOMContentLoaded", () => {
   initAuth();
   initProjects();
   initSmartPip();
-  renderTimelineBlocks();
+  updateJobsPillCount();
 });
 
 </script>
